@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router-dom"
 
-import Dashboard from "./components/Dashboard"
-import Details from "./components/Details"
-import EventForm from "./components/EventForm"
-import Footer from "./components/Footer"
-import Header from "./components/Header"
-import Login from "./components/Login"
-import NotFound from "./components/NotFound"
-import Register from "./components/Register"
-import Search from "./components/Search"
-import AllEvents from "./components/Events"
+import Dashboard from "./components/dashboard/Dashboard"
+import Details from "./components/details/Details"
+import EventForm from "./components/event-form/EventForm"
+import Footer from "./components/footer/Footer"
+import Header from "./components/header/Header"
+import Login from "./components/login/Login"
+import NotFound from "./components/not-found/NotFound"
+import Register from "./components/register/Register"
+import Search from "./components/search/Search"
+import AllEvents from "./components/events/Events"
 
 function App() {
 
@@ -23,6 +23,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/search' element={<Search />} />
           <Route path='/events' element={<AllEvents />} />
+          <Route path='/events/:eventId' element={<Details />} />
           <Route path='/create' element={<EventForm />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

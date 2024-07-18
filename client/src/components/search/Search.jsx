@@ -10,8 +10,6 @@ const stats = [
 export default function Search() {
   return (
     <>
-
-      
       <form>
         <div className="space-y-3">
           <div className="sm:col-span-full">
@@ -38,9 +36,10 @@ export default function Search() {
 
       </form>
 
-      
+      {stats.length == 0 ?
         <h2 className="text-3xl font-bold tracking-tight text-gray-700">THERE ARE NO RESULTS FOR ...</h2>
-
+        :
+        <>
         <h2 className="text-3xl font-bold tracking-tight text-gray-700">RESULTS FOR ...</h2>
         <div className="bg-white py-8 sm:py-16">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -63,8 +62,8 @@ export default function Search() {
             </dl>
           </div>
         </div>
-      
-      
+      </>
+      }
     </>
   )
 }
