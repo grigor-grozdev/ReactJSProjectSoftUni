@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
+import *as request from "../../api/requester";
 
 export default function AllEvents() {
     const [events, setEvents] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         (async () => {
-            const response = await fetch('http://localhost:3030/jsonstore/cyclingEvents');
-            const result = await response.json();
+            const result = await request.get('http://localhost:3030/jsonstore/cyclingEvents');
 
             let events = Object.entries(result).map(e => e[1]);
 
-            setEvents(events);
+            setEvents(events)
         })();
     }, []);
 
@@ -27,11 +27,11 @@ export default function AllEvents() {
                                 <dt className="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">{event.title}</dt>
                                 <dd className="text-base leading-7 text-gray-600">Location: {event.location}</dd>
                                 <dd className="text-base leading-7 text-gray-600">Date: {event.date}</dd>
-                                
-                                <Link to={`/events/${event._id}`}                                    
-                                    className="flex-none rounded-md bg-gray-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-900"
+
+                                <Link to={`/events/${event._id}`}
+                                    className="flex-none rounded-md bg-gray-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
                                 >
-                                    Details                                
+                                    Details
                                 </Link>
                             </div>
                         ))}

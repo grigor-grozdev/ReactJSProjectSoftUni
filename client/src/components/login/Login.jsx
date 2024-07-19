@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export default function Login() {
     return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -53,7 +55,7 @@ export default function Login() {
                 <div>
                   <button
                     type="submit"
-                    className="flex w-full justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-900"
+                    className="flex w-full justify-center rounded-md bg-gray-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
                   >
                     Sign in
                   </button>
@@ -62,9 +64,9 @@ export default function Login() {
     
               <p className="mt-10 text-center text-sm text-gray-500">
                     Not a member?{' '}
-                <a href="#" className="font-semibold leading-6 text-bg-gray-900 hover:text-bg-gray-700">
+                <Link to="/register" className="font-semibold leading-6 text-bg-gray-900 hover:text-bg-gray-700">
                   Register
-                </a>
+                </Link>
               </p>
             </div>
           </div>

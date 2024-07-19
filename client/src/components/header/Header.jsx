@@ -3,7 +3,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 
 const navigation = [
-  { name: 'Home', href: '/', current: false },
+  { name: 'Home', href: '/', current: true },
   { name: 'Events', href: '/events', current: false },
   { name: 'Add Event', href: '/create', current: false },
   { name: 'Login', href: '/login', current: false },
@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <>
       <div className="min-h-full">
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav" className="bg-gray-700">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
@@ -39,7 +39,7 @@ export default function Header() {
                         to={item.href}
                         aria-current={item.current ? 'page' : undefined}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-600 hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium'
                         )}
                       >

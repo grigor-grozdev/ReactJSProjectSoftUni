@@ -27,12 +27,6 @@ function App() {
           <Route path='/create' element={<EventForm />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
-
-
-        {/* Your 
-  
-      content */}
-
       </div>
       <Footer />
     </>
