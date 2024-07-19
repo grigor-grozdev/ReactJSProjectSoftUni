@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../dashboard/Dashboard.module.css";
-import *as request from "../../api/requester";
+import *as eventsAPI from "../../api/events-api"
 
 export default function Dashboard() {
 
@@ -9,7 +9,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     (async () => {
-      const result = await request.get('http://localhost:3030/jsonstore/cyclingEvents');
+      const result = await eventsAPI.getAll();
       
       let events = Object.entries(result).map(e => e[1]);
 
