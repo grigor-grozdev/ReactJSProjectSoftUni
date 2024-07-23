@@ -1,9 +1,38 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import {post} from "../../api/requester"
 
 export default function EventForm() {
+
+  const navigate = useNavigate()
+  const [event, setEvent] = useState({
+    title: '',
+    location: '',
+    date: '',
+    website: '',
+    imageUrl: '',
+    description: '',
+    likes: []
+  })
+
+  const formSubmitHandler = async (e) => {
+    e.preventDefault();
+    const result = await post('http://localhost:3030/jsonstore/cyclingEvents', event)
+    
+    navigate(`/events/${result._id}`)
+  }
+
+  const onChangeHandler = (e) => {
+
+    setEvent(oldEvent => ({...oldEvent, [e.target.name]: e.target.value}))
+    
+  }
+ 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8">
-    <form>
+    <form onSubmit={formSubmitHandler}>
       <div className="space-y-3">
         <div className="border-b border-gray-900/10 pb-6">
           <h2 className="text-base font-semibold leading-12 text-gray-900">Add Event Form</h2>
@@ -22,6 +51,8 @@ export default function EventForm() {
                   type="text"
                   autoComplete=""
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={event.title}
+                  onChange={onChangeHandler}
                 />
               </div>
             </div>        
@@ -37,6 +68,8 @@ export default function EventForm() {
                   type="text"
                   autoComplete=""
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={event.location}
+                  onChange={onChangeHandler}
                 />
               </div>
             </div>
@@ -52,21 +85,25 @@ export default function EventForm() {
                   type="date"
                   autoComplete=""
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={event.date}
+                  onChange={onChangeHandler}
                 />
               </div>
             </div>
                         
             <div className="sm:col-span-full py-1">
-              <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="website" className="block text-sm font-medium leading-6 text-gray-900">
                 Official Website
               </label>
               <div className="mt-2">
                 <input
-                  id="price"
-                  name="price"
+                  id="website"
+                  name="website"
                   type="text"
                   autoComplete=""
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={event.website}
+                  onChange={onChangeHandler}
                 />
               </div>
             </div>
@@ -82,6 +119,8 @@ export default function EventForm() {
                   type="text"
                   autoComplete=""
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={event.imageUrl}
+                  onChange={onChangeHandler}
                 />
               </div>
             </div>
@@ -96,7 +135,8 @@ export default function EventForm() {
                   name="description"
                   rows={2}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  defaultValue={''}
+                  value={event.description}
+                  onChange={onChangeHandler}
                 />
               </div>
               

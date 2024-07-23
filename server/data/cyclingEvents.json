@@ -5,7 +5,7 @@
         "location": "Sofia, Bulgaria",
         "date": "06/29/2024",
         "website": "https://vitosha100km.bg/",
-        "imageUrl": "https://th.bing.com/th?q=Florida+Cycling+Events&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-WW&cc=BG&setlang=en&adlt=moderate&t=1&mw=247",
+        "imageUrl": "https://vitosha100km.bg/wp-content/uploads/2024/04/Site_1140x360.png",
         "description": "Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.",
         "likes": ["02", "03"]
     },
@@ -15,8 +15,7 @@
         "location": "Le Mans, France",
         "date": "08/24/2024",
         "website": "https://24heuresvelo.fr/",
-        "imageUrl": "https://th.bing.com/th?q=Untamed+Cycling+Events&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-WW&cc=BG&setlang=en&adlt=moderate&t=1&mw=247",
-        "description": "Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.",
+        "imageUrl": "https://th.bing.com/th/id/OIP.-JQZat63F_mMfWRPW8_zdgHaE8?rs=1&pid=ImgDetMain",
         "likes": []
     },
     "03": {
@@ -28,5 +27,25 @@
         "imageUrl": "https://www.bikeride.com/images/bike/event_images/081fb5bd-ed4c-4844-ba65-a604bd9f8f29-1024x683.jpg",
         "description": "Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.",
         "likes": ["01", "02"]
+    },
+    "0d551dd5-14bb-4601-abab-f07a27e69f6d": {
+        "title": "Bike & Run for Chepan",
+        "location": "Chepan",
+        "date": "2024-09-14",
+        "website": "https://chepan.stenata.com/en/",
+        "imageUrl": "https://chepan.stenata.com/wp-content/uploads/2024/03/%D0%91%D0%A0%D0%A7-2024-03.jpg",
+        "description": "This year, thanks to the support of the cycling club Veloraprtor, the bike race in the event Bike for Chepan is again part of the BCF (Bulgarian Cycling Federation) calendar with the discipline XCM 66 km. The start of the competition is on 27.04.2024 from the center of the town of Dragoman",
+        "_id": "0d551dd5-14bb-4601-abab-f07a27e69f6d",
+        "likes": []
+    },
+    "b6e7df19-61fd-4b77-970c-832767899681": {
+        "title": "DUNAV ULTRA",
+        "location": "Vidin, Bulgaria",
+        "date": "2024-08-31",
+        "website": "https://dunavultra.com/dunav-ultra-the-route/?lang=en",
+        "imageUrl": "https://dunavultra.com/wp-content/uploads/2022/05/dunav-ultra-adventure-2022-1-scaled.jpg",
+        "description": "Covering a sprawling distance of 740 km, the Dunav Ultra stands tall as Bulgaria’s longest and most awe-inspiring cycling route. The route connects the northwesternmost settlement of the country, the village of Kudelin (Bregovo municipality) with the northeasternmost settlement, the village of Durankulak (Shabla municipality) on the Black Sea. From Vidin to Silistra the route’s trajectory overlaps the transcontinental route Eurovelo 6. The Dunav Ultra is the winner of the Grand Prize “Innovation of the Year in Tourism” of the Ministry of Tourism of the Republic of Bulgaria. The route is in Lonely Planet’s special feature – Best in Travel 2024 selection.",
+        "_id": "b6e7df19-61fd-4b77-970c-832767899681",
+        "likes": []
     }
 }

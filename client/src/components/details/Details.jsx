@@ -1,10 +1,15 @@
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import styles from "../details/Details.module.css";
+
+import {put} from "../../api/requester"
+
 
 export default function Details() {
     const [event, setEvent] = useState({});
     const { eventId } = useParams();
+    
 
     useEffect(() => {
         (async () => {
@@ -17,12 +22,19 @@ export default function Details() {
 
     const likeHandler = async (e) => {
         e.preventDefault();
-
-
-
-        event.likes.push(event._id);
-        setEvent(event)
-    }
+        
+        const newLike = event.likes.push(event._id);
+        
+                
+        setEvent(prevState => ({
+            ...prevState,
+            [event.likes]: newLike
+        }));
+        
+        const response = await put(`http://localhost:3030/jsonstore/cyclingEvents/${event._id}`, event);
+        const result = await response;
+        
+        }
 
     return (
         <div>
@@ -35,12 +47,12 @@ export default function Details() {
                     <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900"></dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            <img src={event.imageUrl} alt="Image race" />
+                            <img className={styles.imageDetails} src={event.imageUrl} alt="Image race" />
                         </dd>
                     </div>
                     <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900"></dt>
-                        <dd className="mt-1 text-semibold leading-7 text-gray-900 sm:col-span-2 sm:mt-0">
+                        <dd className="mt-1 text-2xl font-semibold leading-7 text-gray-900 sm:col-span-2 sm:mt-0 ">
                             {event.title}
                             <p className="mt-1 text-sm leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
                                 <button

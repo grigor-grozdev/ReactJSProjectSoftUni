@@ -45,9 +45,9 @@ export default function Search() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
               {stats.map((stat) => (
-                <div key={stat.id} className="mx-auto flex max-w-xs flex-col gap-y-4">
+                <div key={stat.id} className="flex max-w-xl flex-col items-start justify-between">
                   <img src={stat.imageUrl} alt="Image race" />
-                  <dt className="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">{stat.title}</dt>
+                  <dt  className="flex max-w-xl flex-col items-start justify-between text-2xl font-semibold text-gray-900 sm:text-4xl">{stat.title}</dt>
                   <dd className="text-base leading-7 text-gray-600">Location: {stat.location}</dd>
                   <dd className="text-base leading-7 text-gray-600">Date: {stat.date}</dd>
                   <button

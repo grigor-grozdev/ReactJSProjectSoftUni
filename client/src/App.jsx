@@ -22,7 +22,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/search' element={<Search />} />
-          <Route path='/events' element={<AllEvents />} />
+          <Route path='/events' element={<AllEvents />} />          
+          
           <Route path='/events/:eventId' element={<Details />} />
           <Route path='/create' element={<EventForm />} />
           <Route path='*' element={<NotFound />} />
