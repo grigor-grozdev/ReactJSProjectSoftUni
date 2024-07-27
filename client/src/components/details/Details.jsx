@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom'
 import styles from "../details/Details.module.css";
 
 import {put} from "../../api/requester"
+import Comments from '../comments/Comments';
 
 
 export default function Details() {
@@ -81,6 +82,13 @@ export default function Details() {
                         <dt className="text-sm font-medium leading-6 text-gray-900">Likes:</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
                             {event.likes && (event.likes.length == 0 ? 'No likes for this event yet' : `${event.likes.length} people like this event`)}
+                        </dd>
+                    </div>
+
+                    <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Comments:</dt>
+                        <dd className=" mt-1 text-sm leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
+                            <Comments />
                         </dd>
                     </div>
 

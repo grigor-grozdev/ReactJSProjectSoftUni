@@ -1,23 +1,10 @@
-import { useEffect, useState } from "react";
-import *as eventsAPI from "../../api/events-api"
+import { useGetAllEvents } from "../../hooks/useEvents";
+
 import EventList from "../event-list/EventList";
 
 export default function Dashboard() {
 
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    (async () => {
-      const result = await eventsAPI.getAll();
-
-      let events = Object.entries(result).map(e => e[1]);
-
-      setLoading(false)
-      setEvents(events);
-    })();
-  }, []);
-
+  const [events, loading] = useGetAllEvents();
 
   return (
     <>
