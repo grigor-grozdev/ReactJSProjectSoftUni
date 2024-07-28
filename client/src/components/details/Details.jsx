@@ -1,25 +1,18 @@
 import { PaperClipIcon } from '@heroicons/react/20/solid'
-import { useEffect, useState } from 'react'
+
 import { useParams, Link } from 'react-router-dom'
 import styles from "../details/Details.module.css";
+
+import { useGetOneEvent } from '../../hooks/useEvents';
 
 import {put} from "../../api/requester"
 import Comments from '../comments/Comments';
 
 
 export default function Details() {
-    const [event, setEvent] = useState({});
     const { eventId } = useParams();
+    const [event] = useGetOneEvent(eventId);
     
-
-    useEffect(() => {
-        (async () => {
-            const response = await fetch(`http://localhost:3030/jsonstore/cyclingEvents/${eventId}`);
-            const result = await response.json();
-
-            setEvent(result);
-        })();
-    }, []);
 
     const likeHandler = async (e) => {
         e.preventDefault();
