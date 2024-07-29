@@ -1,6 +1,6 @@
-import { useState } from "react"
 import { Routes, Route } from "react-router-dom"
-import { AuthContext } from "./contexts/AuthContext"
+
+import { AuthContextProvider } from "./contexts/AuthContext"
 
 import Dashboard from "./components/dashboard/Dashboard"
 import Details from "./components/details/Details"
@@ -14,23 +14,9 @@ import Search from "./components/search/Search"
 import AllEvents from "./components/events/Events"
 
 function App() {
-  const [authState, setAuthState] = useState({});
-
-  const changeAuthState = (state) => {
-    setAuthState(state);
-  }
-
-  const contextData = {
-    userId: authState._id,
-    username: authState.username,
-    emai: authState.emai,
-    accessToken: authState.accessToken,
-    isAuthenticated: !!authState.email,
-    changeAuthState
-  }
 
   return (
-    <AuthContext.Provider value={contextData}>
+    <AuthContextProvider>
       <Header />
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <Routes>
@@ -45,7 +31,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
-    </AuthContext.Provider>
+    </AuthContextProvider>
 
   )
 }
