@@ -1,8 +1,7 @@
 import { Disclosure } from '@headlessui/react'
-import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { AuthContext } from '../../contexts/AuthContext'
+import { useAuthContext } from '../../contexts/AuthContext'
 
 const navigationAuth = [
   { name: 'Home', href: '/' },
@@ -21,7 +20,7 @@ const navigationNonAuth = [
 ]
 
 export default function Header() {
-  const { isAuthenticated, username } = useContext(AuthContext);
+  const { isAuthenticated, username } = useAuthContext();
   return (
     <>
       <div className="min-h-full">

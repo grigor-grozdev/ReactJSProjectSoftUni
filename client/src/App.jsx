@@ -12,6 +12,7 @@ import NotFound from "./components/not-found/NotFound"
 import Register from "./components/register/Register"
 import Search from "./components/search/Search"
 import AllEvents from "./components/events/Events"
+import Logout from "./components/logout/Logout"
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Dashboard />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/logout' element={<Logout />} />
           <Route path='/register' element={<Register />} />
           <Route path='/search' element={<Search />} />
           <Route path='/events' element={<AllEvents />} />          
