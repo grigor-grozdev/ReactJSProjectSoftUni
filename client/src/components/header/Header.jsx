@@ -51,7 +51,7 @@ export default function Header() {
                         </NavLink>
                       ))}
                       <div className="flex-shrink-0 px-3 py-2 text-gray-300 text-sm font-medium">
-                        <p>User: {username}</p>
+                        <p>| Hello, {username}!</p>
                       </div>
                     </div>) :
                     (<div className="ml-10 flex items-baseline space-x-4">
@@ -67,7 +67,7 @@ export default function Header() {
                         </NavLink>
                       ))}
                       <div className="flex-shrink-0 px-3 py-2 text-gray-300 text-sm font-medium">
-                        <p>Guest</p>
+                        <p>| You are visiting as a guest. Login or register to unlock all features.</p>
                       </div>
                     </div>)
                   }
