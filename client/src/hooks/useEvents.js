@@ -34,3 +34,9 @@ export function useGetOneEvent(eventId) {
         setEvent
     ]
 }
+
+export function useCreateEvent() {
+    const eventCreateHandler = (eventData) => eventsAPI.create(eventData);
+
+    return eventCreateHandler;
+}

@@ -25,7 +25,7 @@ export default function Details() {
             [event.likes]: newLike
         }));
         
-        const response = await put(`http://localhost:3030/jsonstore/cyclingEvents/${event._id}`, event);
+        const response = await put(`http://localhost:3030/data/cyclingEvents/${event._id}`, event);
         const result = await response;
         
         }

@@ -1,38 +1,46 @@
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import {post} from "../../api/requester"
+import { useForm } from '../../hooks/useForm'
+import { useCreateEvent } from '../../hooks/useEvents'
 
-export default function EventForm() {
-
-  const navigate = useNavigate()
-  const [event, setEvent] = useState({
-    title: '',
+const initialValues = {
+  title: '',
     location: '',
     date: '',
     website: '',
     imageUrl: '',
     description: '',
     likes: []
-  })
+}
 
-  const formSubmitHandler = async (e) => {
-    e.preventDefault();
-    const result = await post('http://localhost:3030/jsonstore/cyclingEvents', event)
+export default function EventForm() {
+  const createEvent = useCreateEvent();
+  const navigate = useNavigate();
+
+  const createHandler = async (values) => {
     
-    navigate(`/events/${result._id}`)
+    try {
+      const {_id: eventId} = await createEvent(values);
+
+      navigate(`/events/${eventId}`)
+    } catch (err){
+      //todo: set error state
+      console.log(err.message)
+    }
+
   }
 
-  const onChangeHandler = (e) => {
 
-    setEvent(oldEvent => ({...oldEvent, [e.target.name]: e.target.value}))
-    
-  }
+  const {
+    values,
+    changeHandler,
+    submitHandler
+  } = useForm(initialValues, createHandler)
+
  
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8">
-    <form onSubmit={formSubmitHandler}>
+    <form onSubmit={submitHandler}>
       <div className="space-y-3">
         <div className="border-b border-gray-900/10 pb-6">
           <h2 className="text-base font-semibold leading-12 text-gray-900">Add Event Form</h2>
@@ -51,8 +59,8 @@ export default function EventForm() {
                   type="text"
                   autoComplete=""
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={event.title}
-                  onChange={onChangeHandler}
+                  value={values.title}
+                  onChange={changeHandler}
                 />
               </div>
             </div>        
@@ -68,8 +76,8 @@ export default function EventForm() {
                   type="text"
                   autoComplete=""
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={event.location}
-                  onChange={onChangeHandler}
+                  value={values.location}
+                  onChange={changeHandler}
                 />
               </div>
             </div>
@@ -85,8 +93,8 @@ export default function EventForm() {
                   type="date"
                   autoComplete=""
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={event.date}
-                  onChange={onChangeHandler}
+                  value={values.date}
+                  onChange={changeHandler}
                 />
               </div>
             </div>
@@ -102,8 +110,8 @@ export default function EventForm() {
                   type="text"
                   autoComplete=""
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={event.website}
-                  onChange={onChangeHandler}
+                  value={values.website}
+                  onChange={changeHandler}
                 />
               </div>
             </div>
@@ -119,8 +127,8 @@ export default function EventForm() {
                   type="text"
                   autoComplete=""
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={event.imageUrl}
-                  onChange={onChangeHandler}
+                  value={values.imageUrl}
+                  onChange={changeHandler}
                 />
               </div>
             </div>
@@ -135,8 +143,8 @@ export default function EventForm() {
                   name="description"
                   rows={2}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={event.description}
-                  onChange={onChangeHandler}
+                  value={values.description}
+                  onChange={changeHandler}
                 />
               </div>
               

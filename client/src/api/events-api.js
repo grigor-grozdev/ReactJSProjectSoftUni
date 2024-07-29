@@ -1,14 +1,17 @@
 import *as request from "./requester";
 
-const BASE_URL = 'http://localhost:3030/jsonstore/cyclingEvents';
+const BASE_URL = 'http://localhost:3030/data/cyclingEvents';
 
-export const getAll = async () => request.get(BASE_URL);
+const getAll = async () => request.get(BASE_URL);
 
-export const getOne = async (eventId) => request.get(`${BASE_URL}/${eventId}`)
+const getOne = async (eventId) => request.get(`${BASE_URL}/${eventId}`)
+
+const create = (eventData) => request.post(BASE_URL, eventData);
 
 const eventsAPI = {
     getAll,
-    getOne
+    getOne,
+    create
 }
 
 export default eventsAPI;

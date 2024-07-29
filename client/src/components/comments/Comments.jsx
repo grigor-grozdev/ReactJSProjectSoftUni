@@ -6,7 +6,7 @@ export default function Comments() {
 
             <div className={styles.scrollableDiv}>
 
-                <div Name="pt-1 flex mt-4">
+                <div className="pt-1 flex mt-4">
                     <div className="pl-2 ml-3 rounded-lg border-2 border-grey-700">
                         <div className="font-medium text-grey-800">John Doe</div>
                         <div className="text-gray-600">Posted on 2023-10-02 14:30</div>
@@ -16,7 +16,7 @@ export default function Comments() {
                     </div>
                 </div>
 
-                <div Name="flex mt-4">
+                <div className="flex mt-4">
                     <div className="pl-2 ml-3 rounded-lg border-2 border-grey-600">
                         <div className="font-medium text-grey-800">Jane Smith</div>
                         <div className="text-gray-600">Posted on 2023-10-02 15:15</div>
@@ -25,7 +25,7 @@ export default function Comments() {
                         </div>
                     </div>
                 </div>
-                <div Name="flex mt-4 snap-start ...">
+                <div className="flex mt-4 snap-start ...">
                     <div className="pl-2 ml-3 rounded-lg border-2 border-grey-600">
                         <div className="font-medium text-grey-800">Jane Smith</div>
                         <div className="text-gray-600">Posted on 2023-10-02 15:15</div>
@@ -34,7 +34,7 @@ export default function Comments() {
                         </div>
                     </div>
                 </div>
-                <div Name="flex mt-4 snap-start ...">
+                <div className="flex mt-4 snap-start ...">
                     <div className="pl-2 ml-3 rounded-lg border-2 border-grey-600">
                         <div className="font-medium text-grey-800">Jane Smith</div>
                         <div className="text-gray-600">Posted on 2023-10-02 15:15</div>
@@ -49,7 +49,7 @@ export default function Comments() {
             <form className="mt-4">
 
                 <div className="mb-4">
-                    <label for="comment" className="block text-grey-800 font-medium">Comment</label>
+                    <label htmlFor="comment" className="block text-grey-800 font-medium">Comment</label>
                     <textarea id="comment" name="comment" className="border-2 border-grey-600 p-2 w-full rounded" required></textarea>
                 </div>
 

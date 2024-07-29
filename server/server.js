@@ -1339,6 +1339,19 @@
     	}
     };
     var seedData = {
+        cyclingEvents: {
+            "101f680e-644d-4be3-ad12-7b4cb0bb5c1b" : {
+                "_ownerId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                "title": "Bike & Run for Chepan",
+                "location": "Chepan",
+                "date": "2024-09-14",
+                "website": "https://chepan.stenata.com/en/",
+                "imageUrl": "https://chepan.stenata.com/wp-content/uploads/2024/03/%D0%91%D0%A0%D0%A7-2024-03.jpg",
+                "description": "This year, thanks to the support of the cycling club Veloraprtor, the bike race in the event Bike for Chepan is again part of the BCF (Bulgarian Cycling Federation) calendar with the discipline XCM 66 km. The start of the competition is on 27.04.2024 from the center of the town of Dragoman",
+                "likes": [],
+                "_createdOn": 1722268582547,
+            }
+        },
     	recipes: {
     		"3987279d-0ad4-4afb-8ca9-5b256ae3b298": {
     			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
