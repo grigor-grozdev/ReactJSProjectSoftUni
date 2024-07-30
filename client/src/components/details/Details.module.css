@@ -3,3 +3,21 @@
     height: 250px;
     border-radius: 5%;
 }
+
+.scrollableDiv {
+    overflow-y: scroll;
+    height: 90px;
+    list-style: none;
+    display: block;
+}
+
+.sectionComments {
+    height: 100%;
+    max-Height: 20vh;
+    width: 100%;
+    border-Radius: 0.5rem;
+    border-Width: 2px;
+    border-Color: #666161;
+    padding: 10px;
+    margin: 1px;
+}
