@@ -18,7 +18,7 @@ export default function Details() {
     const [event, setEvent] = useGetOneEvent(eventId);
     const [comments, setComments] = useGetAllComments(eventId);
     const createComment = useCreateComment();
-    const { isAuthenticated } = useAuthContext();    
+    const { isAuthenticated, username, userId } = useAuthContext();    
     const {
         changeHandler,
         submitHandler,
@@ -27,12 +27,14 @@ export default function Details() {
         try {
            const newComment = await createComment(eventId, comment);
 
-           setComments(oldComments => [...oldComments, newComment])
+           setComments(oldComments => [...oldComments, {...newComment, author:{username}}])
            
         } catch (err) {
             console.log(err.message)
         }
     })
+
+    const isOwner = userId == event._ownerId;
 
    
     const likeHandler = async (e) => {
@@ -107,7 +109,7 @@ export default function Details() {
                                 <div className={styles.scrollableDiv}>
                                     <ul className="pt-0 flex mt-4">
                                         {comments.map(comment => (<li key={comment._id} className="pl-2 pr-2 rounded-lg border-2 border-grey-700 ">
-                                            <div className="font-medium text-grey-800">{comment.author.email}:</div>
+                                            <div className="font-medium text-grey-800">{comment.author.username}:</div>
                                             {/*<div className="text-gray-600">Posted on: {(comment._createdOn)} </div>*/}
                                             <div className="mt-2 text-grey-800">{comment.text}</div>
                                         </li>))
@@ -151,10 +153,11 @@ export default function Details() {
                             Like
                         </button>
 
-                        <button
+                        {isOwner && (
+                        <>
+                            <button
                             type="submit"
                             className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
-
                         >
                             Edit
                         </button>
@@ -165,6 +168,8 @@ export default function Details() {
                         >
                             Delete
                         </button>
+                        </>)
+                        }
                     </div>
 
                 </dl>
