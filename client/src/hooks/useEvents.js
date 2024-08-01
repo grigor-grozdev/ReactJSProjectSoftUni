@@ -20,7 +20,14 @@ export function useGetAllEvents() {
 };
 
 export function useGetOneEvent(eventId) {
-    const [event, setEvent] = useState({});
+    const [event, setEvent] = useState({
+        title: '',
+        location: '',
+        date: '',
+        website: '',
+        imageUrl: '',
+        description: '',
+    });
 
     useEffect(() => {
         (async () => {

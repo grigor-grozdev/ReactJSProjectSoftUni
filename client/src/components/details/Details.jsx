@@ -1,42 +1,56 @@
 
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import styles from "../details/Details.module.css";
 
 import { useGetOneEvent } from '../../hooks/useEvents';
 import { useGetAllComments } from '../../hooks/useComments';
 import { useAuthContext } from '../../contexts/AuthContext';
 
-import {useCreateComment} from "../../hooks/useComments";
+import { useCreateComment } from "../../hooks/useComments";
 import { useForm } from "../../hooks/useForm";
 
 import { put } from "../../api/requester"
+import eventsAPI from '../../api/events-api';
 
-const initialValues = {comment: ''}
+const initialValues = { comment: '' }
 
 export default function Details() {
+    const navigate = useNavigate();
     const { eventId } = useParams();
     const [event, setEvent] = useGetOneEvent(eventId);
     const [comments, setComments] = useGetAllComments(eventId);
     const createComment = useCreateComment();
-    const { isAuthenticated, username, userId } = useAuthContext();    
+    const { isAuthenticated, username, userId } = useAuthContext();
     const {
         changeHandler,
         submitHandler,
         values
-    } = useForm(initialValues, async ({comment}) => {
+    } = useForm(initialValues, async ({ comment }) => {
         try {
-           const newComment = await createComment(eventId, comment);
+            const newComment = await createComment(eventId, comment);
 
-           setComments(oldComments => [...oldComments, {...newComment, author:{username}}])
-           
+            setComments(oldComments => [...oldComments, { ...newComment, author: { username } }])
+
         } catch (err) {
             console.log(err.message)
         }
     })
 
+    const eventDeleteHandler = async () => {
+        const isConfirmed = confirm('Are you sure?');
+        if(isConfirmed){
+        try {
+            await eventsAPI.remove(eventId);
+
+            navigate('/');
+        } catch (err) {
+            console.log(err.message)
+        }
+    }
+    }
+
     const isOwner = userId == event._ownerId;
 
-   
     const likeHandler = async (e) => {
         e.preventDefault();
 
@@ -98,6 +112,16 @@ export default function Details() {
                         <dt className="text-sm font-medium leading-6 text-gray-900">Likes:</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
                             {event.likes && (event.likes.length == 0 ? 'No likes for this event yet' : `${event.likes.length} people like this event`)}
+                            {isAuthenticated &&
+                            (  !isOwner &&
+                            (<button
+                                type="submit"
+                                className="rounded-md bg-gray-800 ml-5 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
+                                onClick={likeHandler}
+                            >
+                                Like
+                            </button>))
+                            }
                         </dd>
                     </div>
 
@@ -107,10 +131,10 @@ export default function Details() {
 
                             <section className={styles.sectionComments}>
                                 <div className={styles.scrollableDiv}>
-                                    <ul className="pt-0 flex mt-4">
-                                        {comments.map(comment => (<li key={comment._id} className="pl-2 pr-2 rounded-lg border-2 border-grey-700 ">
+                                    <ul className={styles.comments}>
+                                        {comments.map(comment => (<li key={comment._id} className="block mb-1 pl-2 pr-2 rounded-lg border-2 border-grey-700 ">
                                             <div className="font-medium text-grey-800">{comment.author.username}:</div>
-                                            {/*<div className="text-gray-600">Posted on: {(comment._createdOn)} </div>*/}
+                                            <div className="text-gray-600">Posted on: {(new Date(comment._createdOn)).toString()} </div>
                                             <div className="mt-2 text-grey-800">{comment.text}</div>
                                         </li>))
                                         }
@@ -120,55 +144,54 @@ export default function Details() {
                             </section>
 
                             {isAuthenticated && (
-                               
+
                                 <form className="mt-4" onSubmit={submitHandler}>
-                    
+
                                     <div className="mb-4">
                                         <label htmlFor="comment" className="block text-grey-800 font-medium">Comment</label>
-                                        <textarea 
-                                        id="comment" 
-                                        name="comment" 
-                                        className="border-2 border-grey-600 p-2 w-full rounded" 
-                                        required 
-                                        onChange={changeHandler}
-                                        value={values.comment}
+                                        <textarea
+                                            id="comment"
+                                            name="comment"
+                                            className="border-2 border-grey-600 p-2 w-full rounded"
+                                            required
+                                            onChange={changeHandler}
+                                            value={values.comment}
                                         ></textarea>
                                     </div>
-                    
+
                                     <button type="submit"
                                         className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800">
                                         Post Comment
                                     </button>
+
+
                                 </form>
-                            
+
                             )}
+
                         </dd>
                     </div>
                     <div className="mt-6 flex items-center justify-end gap-x-6">
-                        <button
-                            type="submit"
-                            className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
-                            onClick={likeHandler}
-                        >
-                            Like
-                        </button>
+
 
                         {isOwner && (
-                        <>
-                            <button
-                            type="submit"
-                            className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
-                        >
-                            Edit
-                        </button>
+                            <div className="mt-6 flex items-center justify-end gap-x-6">
+                                <button
+                                    type="submit"
+                                    className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
+                                    onClick={() => navigate(`/events/${eventId}/edit`)}
+                                >
+                                    Edit
+                                </button>
 
-                        <button
-                            type="submit"
-                            className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
-                        >
-                            Delete
-                        </button>
-                        </>)
+                                <button
+                                    type="submit"
+                                    className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
+                                    onClick={eventDeleteHandler}
+                                >
+                                    Delete
+                                </button>
+                            </div>)
                         }
                     </div>
 

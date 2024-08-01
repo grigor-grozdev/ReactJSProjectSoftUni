@@ -8,10 +8,16 @@ const getOne = async (eventId) => request.get(`${BASE_URL}/${eventId}`)
 
 const create = (eventData) => request.post(BASE_URL, eventData);
 
+const remove = (eventId) => request.del(`${BASE_URL}/${eventId}`);
+
+const update = (eventId, eventData) => request.put(`${BASE_URL}/${eventId}`, eventData);
+
 const eventsAPI = {
     getAll,
     getOne,
-    create
+    create,
+    remove,
+    update
 }
 
 export default eventsAPI;

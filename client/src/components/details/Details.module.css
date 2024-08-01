@@ -7,8 +7,7 @@
 .scrollableDiv {
     overflow-y: scroll;
     height: 90px;
-    list-style: none;
-    display: block;
+       
 }
 
 .sectionComments {
@@ -21,3 +20,9 @@
     padding: 10px;
     margin: 1px;
 }
+
+.comments {
+    padding-top: 0;
+    margin-top: 1rem;
+    list-style-type: none;
+  }

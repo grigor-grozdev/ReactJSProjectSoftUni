@@ -13,6 +13,7 @@ import Register from "./components/register/Register"
 import Search from "./components/search/Search"
 import AllEvents from "./components/events/Events"
 import Logout from "./components/logout/Logout"
+import EventEdit from "./components/event-edit/EventEdit"
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/search' element={<Search />} />
           <Route path='/events' element={<AllEvents />} />          
           <Route path='/events/:eventId' element={<Details />} />
+          <Route path='/events/:eventId/edit' element={<EventEdit />} />
           <Route path='/create' element={<EventForm />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

@@ -1,50 +1,41 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { useForm } from '../../hooks/useForm'
-import { useCreateEvent } from '../../hooks/useEvents'
+import { useGetOneEvent } from '../../hooks/useEvents'
+import eventsAPI from '../../api/events-api';
 
-const initialValues = {
-  title: '',
-  location: '',
-  date: '',
-  website: '',
-  imageUrl: '',
-  description: ''
-}
+export default function EventEdit() {
+    const navigate = useNavigate();
+    const {eventId} = useParams();
+    const [event] = useGetOneEvent(eventId)
+  
+    const editHandler = async (values) => { 
 
-export default function EventForm() {
-  const createEvent = useCreateEvent();
-  const navigate = useNavigate();
-
-  const createHandler = async (values) => {
-    
-    try {
-      const {_id: eventId} = await createEvent(values);
-
-      navigate(`/events/${eventId}`)
-    } catch (err){
-      //todo: set error state
-      console.log(err.message)
+        try {
+        await eventsAPI.update(eventId, values);
+  
+        navigate(`/events/${eventId}`)
+      } catch (err){
+        //todo: set error state
+        console.log(err.message)
+      }
+  
     }
+  
+    const {
+      values,
+      changeHandler,
+      submitHandler
+    } = useForm(event, editHandler)
 
-  }
-
-
-  const {
-    values,
-    changeHandler,
-    submitHandler
-  } = useForm(initialValues, createHandler)
-
- 
-  return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8">
+return (
+<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8">
     <form onSubmit={submitHandler}>
       <div className="space-y-3">
         <div className="border-b border-gray-900/10 pb-6">
-          <h2 className="text-base font-semibold leading-12 text-gray-900">Add Event Form</h2>
+          <h2 className="text-base font-semibold leading-12 text-gray-900">Edit Event Form</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600 pb-6">
-            Pls fill in information about upcoming cycling event.
+            Edit information about cycling event.
           </p>
           
             <div className="sm:col-span-full py-1">
@@ -156,7 +147,7 @@ export default function EventForm() {
         <button 
         type="button" 
         className="text-sm font-semibold leading-6 text-gray-900"
-        onClick={() => navigate('/')}
+        onClick={() => navigate(`/events/${eventId}`)}
         >
           Cancel
         </button>
@@ -168,5 +159,5 @@ export default function EventForm() {
       </div>
     </form>
     </div>
-  )
+);
 }
