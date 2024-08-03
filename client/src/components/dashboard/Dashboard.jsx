@@ -1,10 +1,10 @@
-import { useGetAllEvents } from "../../hooks/useEvents";
+import { useGetUpcomingEvents } from "../../hooks/useEvents";
 
 import EventList from "../event-list/EventList";
 
 export default function Dashboard() {
 
-  const [events, loading] = useGetAllEvents();
+  const [events, loading] = useGetUpcomingEvents();
 
   return (
     <>

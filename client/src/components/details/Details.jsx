@@ -134,7 +134,7 @@ export default function Details() {
                                     <ul className={styles.comments}>
                                         {comments.map(comment => (<li key={comment._id} className="block mb-1 pl-2 pr-2 rounded-lg border-2 border-grey-700 ">
                                             <div className="font-medium text-grey-800">{comment.author.username}:</div>
-                                            <div className="text-gray-600">Posted on: {(new Date(comment._createdOn)).toString()} </div>
+                                            <div className="text-gray-400">Posted on: {(new Date(comment._createdOn)).toISOString().split('T')[0]} </div>
                                             <div className="mt-2 text-grey-800">{comment.text}</div>
                                         </li>))
                                         }

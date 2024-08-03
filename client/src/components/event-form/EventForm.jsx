@@ -9,7 +9,8 @@ const initialValues = {
   date: '',
   website: '',
   imageUrl: '',
-  description: ''
+  description: '',
+  likes: []
 }
 
 export default function EventForm() {

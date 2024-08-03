@@ -1,5 +1,5 @@
 import { Disclosure } from '@headlessui/react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 import { useAuthContext } from '../../contexts/AuthContext'
 
@@ -9,6 +9,7 @@ const navigationAuth = [
   { name: 'Search', href: '/search' },
   { name: 'Add Event', href: '/create' },
   { name: 'Logout', href: '/logout' },
+  { name: '| View profile page', href: '/profile' },
 ]
 
 const navigationNonAuth = [
@@ -52,6 +53,7 @@ export default function Header() {
                       <div className="flex-shrink-0 px-3 py-2 text-gray-300 text-sm font-medium">
                         <p>| Hello, {username}!</p>
                       </div>
+                      
                     </div>) :
                     (<div className="ml-10 flex items-baseline space-x-4">
                       {navigationNonAuth.map((item) => (
