@@ -6,9 +6,11 @@ const getAll = async () => request.get(BASE_URL);
 
 const getUpcoming = async (currentDate) => request.get(`${BASE_URL}?where=date>%22${currentDate}%22`);
 
-const getUserEvents = async (userId) => request.get(`${BASE_URL}?where=_ownerId%3D%22${userId}%22`)
+const getUserEvents = async (userId) => request.get(`${BASE_URL}?where=_ownerId%3D%22${userId}%22`);
 
-const getUserCommentedEvents = async (userId) => request.get(`http://localhost:3030/data/comments?where=_ownerId%3D%22${userId}%22&load=eventId%3DeventId%3AcyclingEvents`)
+const getUserCommentedEvents = async (userId) => request.get(`http://localhost:3030/data/comments?where=_ownerId%3D%22${userId}%22&load=eventId%3DeventId%3AcyclingEvents`);
+
+const getUserLikedEvents = async (userId) => request.get(`http://localhost:3030/data/likes?where=_ownerId%3D%22${userId}%22&load=eventId%3DeventId%3AcyclingEvents`);
 
 const getOne = async (eventId) => request.get(`${BASE_URL}/${eventId}`)
 
@@ -26,6 +28,7 @@ const eventsAPI = {
     getUpcoming,
     getUserEvents,
     getUserCommentedEvents,
+    getUserLikedEvents,
     getOne,
     create,
     remove,

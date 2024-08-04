@@ -94,6 +94,22 @@ export function useGetUserCommentedEvents(userId) {
     return [events, loadingCommented]
 };
 
+export function useGetUserLikedEvents(userId) {
+    const [events, setEvents] = useState([]);
+    const [loadingLiked, setLoading] = useState(true);
+
+    useEffect(() => {
+        (async () => {
+            const result = await eventsAPI.getUserLikedEvents(userId);
+
+            setLoading(false)
+            setEvents(result);
+        })();
+    }, []);
+
+    return [events, loadingLiked]
+};
+
 export function useCreateEvent() {
     const eventCreateHandler = (eventData) => eventsAPI.create(eventData);
 

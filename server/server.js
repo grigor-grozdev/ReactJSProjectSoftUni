@@ -1,10 +1,11 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('http'), require('fs'), require('crypto')) :
-    typeof define === 'function' && define.amd ? define(['http', 'fs', 'crypto'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Server = factory(global.http, global.fs, global.crypto));
-}(this, (function (http, fs, crypto) { 'use strict';
+        typeof define === 'function' && define.amd ? define(['http', 'fs', 'crypto'], factory) :
+            (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Server = factory(global.http, global.fs, global.crypto));
+}(this, (function (http, fs, crypto) {
+    'use strict';
 
-    function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+    function _interopDefaultLegacy(e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
     var http__default = /*#__PURE__*/_interopDefaultLegacy(http);
     var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
@@ -13,14 +14,14 @@
     class ServiceError extends Error {
         constructor(message = 'Service Error') {
             super(message);
-            this.name = 'ServiceError'; 
+            this.name = 'ServiceError';
         }
     }
 
     class NotFoundError extends ServiceError {
         constructor(message = 'Resource not found') {
             super(message);
-            this.name = 'NotFoundError'; 
+            this.name = 'NotFoundError';
             this.status = 404;
         }
     }
@@ -28,7 +29,7 @@
     class RequestError extends ServiceError {
         constructor(message = 'Request error') {
             super(message);
-            this.name = 'RequestError'; 
+            this.name = 'RequestError';
             this.status = 400;
         }
     }
@@ -36,7 +37,7 @@
     class ConflictError extends ServiceError {
         constructor(message = 'Resource conflict') {
             super(message);
-            this.name = 'ConflictError'; 
+            this.name = 'ConflictError';
             this.status = 409;
         }
     }
@@ -44,7 +45,7 @@
     class AuthorizationError extends ServiceError {
         constructor(message = 'Unauthorized') {
             super(message);
-            this.name = 'AuthorizationError'; 
+            this.name = 'AuthorizationError';
             this.status = 401;
         }
     }
@@ -52,7 +53,7 @@
     class CredentialError extends ServiceError {
         constructor(message = 'Forbidden') {
             super(message);
-            this.name = 'CredentialError'; 
+            this.name = 'CredentialError';
             this.status = 403;
         }
     }
@@ -556,8 +557,8 @@
             if (query.pageSize) {
                 responseData = responseData.slice(0, pageSize);
             }
-    		
-    		if (query.distinct) {
+
+            if (query.distinct) {
                 const props = query.distinct.split(',').filter(p => p != '');
                 responseData = Object.values(responseData.reduce((distinct, c) => {
                     const key = props.map(p => c[p]).join('::');
@@ -793,7 +794,7 @@
     }
 
     function onRequest(context, tokens, query, body) {
-        Object.entries(body).forEach(([k,v]) => {
+        Object.entries(body).forEach(([k, v]) => {
             console.log(`${k} ${v ? 'enabled' : 'disabled'}`);
             context.util[k] = v;
         });
@@ -931,7 +932,7 @@
          * @param {Object} data Value to store. Shallow merge will be performed!
          * @return {Object} Updated entry.
          */
-         function merge(collection, id, data) {
+        function merge(collection, id, data) {
             if (!collections.has(collection)) {
                 throw new ReferenceError('Collection does not exist: ' + collection);
             }
@@ -1318,29 +1319,29 @@
 
     var identity = "email";
     var protectedData = {
-    	users: {
-    		"35c62d76-8152-4626-8712-eeb96381bea8": {
-    			email: "peter@abv.bg",
-    			username: "Peter",
-    			hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
-    		},
-    		"847ec027-f659-4086-8032-5173e2f9c93a": {
-    			email: "george@abv.bg",
-    			username: "George",
-    			hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
-    		},
-    		"60f0cf0b-34b0-4abd-9769-8c42f830dffc": {
-    			email: "admin@abv.bg",
-    			username: "Admin",
-    			hashedPassword: "fac7060c3e17e6f151f247eacb2cd5ae80b8c36aedb8764e18a41bbdc16aa302"
-    		}
-    	},
-    	sessions: {
-    	}
+        users: {
+            "35c62d76-8152-4626-8712-eeb96381bea8": {
+                email: "peter@abv.bg",
+                username: "Peter",
+                hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
+            },
+            "847ec027-f659-4086-8032-5173e2f9c93a": {
+                email: "george@abv.bg",
+                username: "George",
+                hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
+            },
+            "60f0cf0b-34b0-4abd-9769-8c42f830dffc": {
+                email: "admin@abv.bg",
+                username: "Admin",
+                hashedPassword: "fac7060c3e17e6f151f247eacb2cd5ae80b8c36aedb8764e18a41bbdc16aa302"
+            }
+        },
+        sessions: {
+        }
     };
     var seedData = {
         cyclingEvents: {
-            "101f680e-644d-4be3-ad12-7b4cb0bb5c1b" : {
+            "101f680e-644d-4be3-ad12-7b4cb0bb5c1b": {
                 "_ownerId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
                 "title": "Bike & Run for Chepan",
                 "location": "Chepan",
@@ -1374,92 +1375,128 @@
                 "_createdOn": 1722604023454.
             }
         },
-                     
-    	recipes: {
-    		"3987279d-0ad4-4afb-8ca9-5b256ae3b298": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			name: "Easy Lasagna",
-    			img: "assets/lasagna.jpg",
-    			ingredients: [
-    				"1 tbsp Ingredient 1",
-    				"2 cups Ingredient 2",
-    				"500 g  Ingredient 3",
-    				"25 g Ingredient 4"
-    			],
-    			steps: [
-    				"Prepare ingredients",
-    				"Mix ingredients",
-    				"Cook until done"
-    			],
-    			_createdOn: 1613551279012
-    		},
-    		"8f414b4f-ab39-4d36-bedb-2ad69da9c830": {
-    			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-    			name: "Grilled Duck Fillet",
-    			img: "assets/roast.jpg",
-    			ingredients: [
-    				"500 g  Ingredient 1",
-    				"3 tbsp Ingredient 2",
-    				"2 cups Ingredient 3"
-    			],
-    			steps: [
-    				"Prepare ingredients",
-    				"Mix ingredients",
-    				"Cook until done"
-    			],
-    			_createdOn: 1613551344360
-    		},
-    		"985d9eab-ad2e-4622-a5c8-116261fb1fd2": {
-    			_ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
-    			name: "Roast Trout",
-    			img: "assets/fish.jpg",
-    			ingredients: [
-    				"4 cups Ingredient 1",
-    				"1 tbsp Ingredient 2",
-    				"1 tbsp Ingredient 3",
-    				"750 g  Ingredient 4",
-    				"25 g Ingredient 5"
-    			],
-    			steps: [
-    				"Prepare ingredients",
-    				"Mix ingredients",
-    				"Cook until done"
-    			],
-    			_createdOn: 1613551388703
-    		}
-    	},
-    	comments: { 		
-    	},
-    	likes: {
-    	}
+
+        recipes: {
+            "3987279d-0ad4-4afb-8ca9-5b256ae3b298": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                name: "Easy Lasagna",
+                img: "assets/lasagna.jpg",
+                ingredients: [
+                    "1 tbsp Ingredient 1",
+                    "2 cups Ingredient 2",
+                    "500 g  Ingredient 3",
+                    "25 g Ingredient 4"
+                ],
+                steps: [
+                    "Prepare ingredients",
+                    "Mix ingredients",
+                    "Cook until done"
+                ],
+                _createdOn: 1613551279012
+            },
+            "8f414b4f-ab39-4d36-bedb-2ad69da9c830": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                name: "Grilled Duck Fillet",
+                img: "assets/roast.jpg",
+                ingredients: [
+                    "500 g  Ingredient 1",
+                    "3 tbsp Ingredient 2",
+                    "2 cups Ingredient 3"
+                ],
+                steps: [
+                    "Prepare ingredients",
+                    "Mix ingredients",
+                    "Cook until done"
+                ],
+                _createdOn: 1613551344360
+            },
+            "985d9eab-ad2e-4622-a5c8-116261fb1fd2": {
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
+                name: "Roast Trout",
+                img: "assets/fish.jpg",
+                ingredients: [
+                    "4 cups Ingredient 1",
+                    "1 tbsp Ingredient 2",
+                    "1 tbsp Ingredient 3",
+                    "750 g  Ingredient 4",
+                    "25 g Ingredient 5"
+                ],
+                steps: [
+                    "Prepare ingredients",
+                    "Mix ingredients",
+                    "Cook until done"
+                ],
+                _createdOn: 1613551388703
+            }
+        },
+        comments: {
+            "3afb9cdd-8600-4529-abdd-8b6f4be3a5d3": {
+                "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
+                "eventId": "84478840-956c-41be-ac5c-814ecee740da",
+                "text": "good event",
+                "_createdOn": 1722803915531,
+            }
+        },
+        likes: {
+            "9242c1e9-4749-4558-839d-b2fdc52f544a": {
+                "_ownerId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                "eventId": "84478840-956c-41be-ac5c-814ecee740da",
+                "userId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                "_createdOn": 1722803039969,
+            },
+            "6bc0d3bc-474f-4c34-810a-d98b40318a10": {
+                "_ownerId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                "eventId": "f57d5a7b-c4ac-463d-b594-40fce411689a",
+                "userId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                "_createdOn": 1722803769274,
+            },
+            "cf420cca-19e7-4fac-805a-a053e6f06125": {
+                "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
+                "eventId": "84478840-956c-41be-ac5c-814ecee740da",
+                "userId": "847ec027-f659-4086-8032-5173e2f9c93a",
+                "_createdOn": 1722803867855,
+            },
+            "f53d54c8-2e1a-48e9-a65a-b46135dc0030": {
+                "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
+                "eventId": "f57d5a7b-c4ac-463d-b594-40fce411689a",
+                "userId": "847ec027-f659-4086-8032-5173e2f9c93a",
+                "_createdOn": 1722804925033,
+            },
+            "70aea4d8-58c6-4a3e-a44c-89704eef5f72": {
+                "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
+                "eventId": "101f680e-644d-4be3-ad12-7b4cb0bb5c1b",
+                "userId": "35c62d76-8152-4626-8712-eeb96381bea8",
+                "_createdOn": 1722805022789,
+            }
+        }
     };
     var rules$1 = {
-    	users: {
-    		".create": false,
-    		".read": [
-    			"Owner"
-    		],
-    		".update": false,
-    		".delete": false
-    	},
-    	members: {
-    		".update": "isOwner(user, get('teams', data.teamId))",
-    		".delete": "isOwner(user, get('teams', data.teamId)) || isOwner(user, data)",
-    		"*": {
-    			teamId: {
-    				".update": "newData.teamId = data.teamId"
-    			},
-    			status: {
-    				".create": "newData.status = 'pending'"
-    			}
-    		}
-    	}
+        users: {
+            ".create": false,
+            ".read": [
+                "Owner"
+            ],
+            ".update": false,
+            ".delete": false
+        },
+        members: {
+            ".update": "isOwner(user, get('teams', data.teamId))",
+            ".delete": "isOwner(user, get('teams', data.teamId)) || isOwner(user, data)",
+            "*": {
+                teamId: {
+                    ".update": "newData.teamId = data.teamId"
+                },
+                status: {
+                    ".create": "newData.status = 'pending'"
+                }
+            }
+        }
     };
     var settings = {
-    	identity: identity,
-    	protectedData: protectedData,
-    	seedData: seedData,
-    	rules: rules$1
+        identity: identity,
+        protectedData: protectedData,
+        seedData: seedData,
+        rules: rules$1
     };
 
     const plugins = [
