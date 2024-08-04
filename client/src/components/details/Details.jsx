@@ -2,15 +2,16 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import styles from "../details/Details.module.css";
 
+import { useAuthContext } from '../../contexts/AuthContext';
 import { useGetOneEvent } from '../../hooks/useEvents';
 import { useGetAllComments } from '../../hooks/useComments';
-import { useAuthContext } from '../../contexts/AuthContext';
-
 import { useCreateComment } from "../../hooks/useComments";
+import { useGetAllLikes } from '../../hooks/useLikes';
+
 import { useForm } from "../../hooks/useForm";
 
-import { put } from "../../api/requester"
 import eventsAPI from '../../api/events-api';
+import likesAPI from '../../api/likes-api';
 
 const initialValues = { comment: '' }
 
@@ -20,7 +21,13 @@ export default function Details() {
     const [event, setEvent] = useGetOneEvent(eventId);
     const [comments, setComments] = useGetAllComments(eventId);
     const createComment = useCreateComment();
+    const [likes, setLikes] = useGetAllLikes(eventId);
+
     const { isAuthenticated, username, userId } = useAuthContext();
+
+    const isOwner = userId == event._ownerId;
+    let isLiked = likes?.some(like => like._ownerId == userId);
+
     const {
         changeHandler,
         submitHandler,
@@ -36,34 +43,31 @@ export default function Details() {
         }
     })
 
-    const eventDeleteHandler = async () => {
+    const eventDeleteHandler = async (e) => {
+        e.preventDefault();
         const isConfirmed = confirm('Are you sure?');
-        if(isConfirmed){
-        try {
-            await eventsAPI.remove(eventId);
+        if (isConfirmed) {
+            try {
+                await eventsAPI.remove(eventId);
 
-            navigate('/');
-        } catch (err) {
-            console.log(err.message)
+                navigate('/');
+            } catch (err) {
+                console.log(err.message)
+            }
         }
     }
-    }
-
-    const isOwner = userId == event._ownerId;
 
     const likeHandler = async (e) => {
         e.preventDefault();
+        try {
+            const like = await likesAPI.create(eventId, userId);
+            setLikes(oldLikes => [...oldLikes, like])
+            isLiked=likes.some(like => like._ownerId == userId);
+            console.log(isLiked)
 
-        const newLike = event.likes.push(event._id);
-
-
-        setEvent(prevState => ({
-            ...prevState,
-            [event.likes]: newLike
-        }));
-
-        const response = await put(`http://localhost:3030/data/cyclingEvents/${event._id}`, event);
-        const result = await response;
+        } catch (err) {
+            console.log(err.message);
+        }
 
     }
 
@@ -110,18 +114,22 @@ export default function Details() {
                     </div>
                     <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Likes:</dt>
-                        <dd className="mt-1 text-sm leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
-                            {event.likes && (event.likes.length == 0 ? 'No likes for this event yet' : `${event.likes.length} people like this event`)}
-                            {isAuthenticated &&
-                            (  !isOwner &&
-                            (<button
-                                type="submit"
-                                className="rounded-md bg-gray-800 ml-5 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
-                                onClick={likeHandler}
-                            >
-                                Like
-                            </button>))
+                        <dd className="flex mt-1 text-sm leading-6 text-gray-900 sm:col-span-2 sm:mt-0">
+                            {likes.length > 0
+                                ? `${likes.length} people like this event`
+                                : 'No likes for this event yet'
                             }
+                            {isAuthenticated &&
+                                ((!isOwner && !isLiked) &&
+                                    (<button
+                                        type="submit"
+                                        className="rounded-md bg-gray-800 ml-5 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
+                                        onClick={likeHandler}
+                                    >
+                                        Like
+                                    </button>))
+                            }
+                            {isLiked && <span className="flex ml-10 text-sm leading-6 text-gray-900 sm:col-span-2 sm:mt-0">You liked this event.</span>}
                         </dd>
                     </div>
 
