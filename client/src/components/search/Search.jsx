@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useGetSearchEvents } from "../../hooks/useEvents";
 import EventList from "../event-list/EventList";
 
@@ -6,20 +6,15 @@ import EventList from "../event-list/EventList";
 export default function Search() {
 
   const [search, setSearch] = useState('');
+  const searchRef = useRef();
 
   const [events, loading] = useGetSearchEvents(search);
 
-  const changeHandler = (e) => {
-    setSearch(e.target.value);
-  }
-
   const submitHandler = (e) => {
     e.preventDefault();
-    
+    const searchValue = searchRef.current.value;
+    setSearch(searchValue);
   }
-
-
-
 
   return (
     <>
@@ -34,10 +29,8 @@ export default function Search() {
                 id="search"
                 name="search"
                 type="text"
-                autoComplete=""
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={search}
-                onChange={changeHandler}
+                ref={searchRef}
               />
             </div>
           </div>
@@ -51,27 +44,27 @@ export default function Search() {
 
       </form>
 
-      
 
-            {loading ? <h3 className="text-2xl font-bold tracking-tight text-gray-700">Loading...</h3>
-              :
-              events.length > 0
-                ?
-                <>
-                  <h2 className="text-3xl font-bold tracking-tight text-gray-700">RESULTS FOR...{search}</h2>
-                  <div className="bg-white py-8 sm:py-16">
-                  <div className="mx-auto max-w-7xl px-6 lg:px-8">
+
+      {loading ? <h3 className="text-2xl font-bold tracking-tight text-gray-700">Loading...</h3>
+        :
+        events.length > 0
+          ?
+          <>
+            <h2 className="text-3xl font-bold tracking-tight text-gray-700">RESULTS FOR...{search}</h2>
+            <div className="bg-white py-8 sm:py-16">
+              <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <dl className=" grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
                   {events.map(event => <EventList key={event._id} {...event} />)}
-                  </dl>
-                  </div>
-                  </div>
-                </>
+                </dl>
+              </div>
+            </div>
+          </>
 
-                : <h2 className="text-2xl font-bold tracking-tight text-gray-700">THERE ARE NO RESULTS FOR...{search}</h2>
-            }
+          : <h2 className="text-2xl font-bold tracking-tight text-gray-700">THERE ARE NO RESULTS FOR...{search}</h2>
+      }
 
-          
+
     </>
   )
 }

@@ -43,7 +43,7 @@ export default function ProfilePage() {
                                         <span className="text-gray-800 text-xs">{event.title}</span>
                                     </Link>
                                 )
-                                : <h3 className="text-2xl font-bold tracking-tight text-gray-700">NO POSTED EVENTS YET</h3>)
+                                : <h3 className="text-1xl mt-10 font-bold tracking-tight text-gray-700">NO POSTED EVENTS YET</h3>)
                         }
                     </div>
                 </div>
@@ -62,7 +62,7 @@ export default function ProfilePage() {
                                         <span className="block text-gray-500 text-xs">comment: {event.text}</span>
                                     </Link>
                                 )
-                                : <h3 className="text-1xl font-bold tracking-tight text-gray-700">NO COMMENTED EVENTS YET</h3>)
+                                : <h3 className="text-1xl mt-10 font-bold tracking-tight text-gray-700">NO COMMENTED EVENTS YET</h3>)
                         }
                     </div>
                 </div>

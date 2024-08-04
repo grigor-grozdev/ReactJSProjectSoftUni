@@ -4,10 +4,17 @@ import { useForm } from '../../hooks/useForm'
 import { useGetOneEvent } from '../../hooks/useEvents'
 import eventsAPI from '../../api/events-api';
 
+import styles from "../event-edit/EventEdit.module.css";
+
+
 export default function EventEdit() {
     const navigate = useNavigate();
     const {eventId} = useParams();
     const [event] = useGetOneEvent(eventId)
+
+    const focusHandler = (e) => {
+      e.target.setAttribute('focused', 'true')
+    };
   
     const editHandler = async (values) => { 
 
@@ -47,11 +54,16 @@ return (
                   id="title"
                   name="title"
                   type="text"
-                  autoComplete=""
+                  onBlur={focusHandler}
+                  focused="false"
+                  required
+                  minLength={2}
+                  maxLength={40}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={values.title}
                   onChange={changeHandler}
                 />
+                <span className={styles.error}>Title should be 2-40 characters!</span>
               </div>
             </div>        
             
@@ -64,11 +76,16 @@ return (
                   id="location"
                   name="location"
                   type="text"
-                  autoComplete=""
+                  onBlur={focusHandler}
+                  focused="false"
+                  required
+                  minLength={2}
+                  maxLength={40}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={values.location}
                   onChange={changeHandler}
                 />
+                <span className={styles.error}>Location should be 2-40 characters!</span>
               </div>
             </div>
                         
@@ -81,11 +98,14 @@ return (
                   id="date"
                   name="date"
                   type="date"
-                  autoComplete=""
+                  required
+                  onBlur={focusHandler}
+                  focused="false"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={values.date}
                   onChange={changeHandler}
                 />
+                <span className={styles.error}>Date should be selected!</span>
               </div>
             </div>
                         
@@ -98,11 +118,15 @@ return (
                   id="website"
                   name="website"
                   type="text"
-                  autoComplete=""
+                  required
+                  onBlur={focusHandler}
+                  pattern='(ftp|http|https):\/\/[^ "]+'
+                  focused="false"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={values.website}
                   onChange={changeHandler}
                 />
+                <span className={styles.error}>Enter a valid website!</span>
               </div>
             </div>
                         
@@ -115,11 +139,16 @@ return (
                   id="imageUrl"
                   name="imageUrl"
                   type="text"
-                  autoComplete=""
+                  alt='event image'
+                  required
+                  onBlur={focusHandler}
+                  focused="false"
+                  pattern='https?:\/\/.*\/.*\.\??.*'
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={values.imageUrl}
                   onChange={changeHandler}
                 />
+                <span className={styles.error}>Enter a valid image URL!</span>
               </div>
             </div>
 
@@ -128,14 +157,19 @@ return (
                 Description
               </label>
               <div className="mt-2">
-                <textarea
+                <input
                   id="description"
                   name="description"
+                  type="text"
                   rows={2}
+                  required
+                  onBlur={focusHandler}
+                  focused="false"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   value={values.description}
                   onChange={changeHandler}
                 />
+                <span className={styles.error}>Description should be filled in!</span>
               </div>
               
               
@@ -153,7 +187,7 @@ return (
         </button>
         <button
           type="submit"
-          className="rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800">
+          className="rounded-md m-5 bg-gray-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800">
           Save
         </button>
       </div>

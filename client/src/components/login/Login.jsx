@@ -2,12 +2,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { useLogin } from '../../hooks/useAuth';
 
-const initialValues = { email: '', password: '' };
+import styles from "../login/Login.module.css";
+
+const initialValues = { 
+  email: '', 
+  password: '',
+  
+};
 
 export default function Login() {
 
   const login = useLogin();
   const navigate = useNavigate();
+
+  const focusHandler = (e) => {
+    e.target.setAttribute('focused', 'true')
+  };
 
   const loginHandler = async ({ email, password }) => {
     try {
@@ -46,10 +56,13 @@ export default function Login() {
                 type="email"
                 value={values.email}
                 onChange={changeHandler}
+                onBlur={focusHandler}
+                focused="false"
                 required
                 autoComplete="email"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              <span className={styles.error}>It should be a valid email address!</span>
             </div>
           </div>
 

@@ -108,8 +108,6 @@ export function useGetSearchEvents(search) {
         (async () => {
             const result = await eventsAPI.searchAll(search);
 
-            //let events = Object.entries(result).map(e => e[1]);
-
             setLoading(false)
             setEvents(result);
         })();

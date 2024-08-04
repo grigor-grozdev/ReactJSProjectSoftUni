@@ -10,19 +10,20 @@ import styles from "../register/Register.module.css";
 const initialValues = { username: '', email: '', password: '', repassword: '' };
 
 export default function Register() {
-  const [error, setError] = useState('');
+    
   const register = useRegister();
   const navigate = useNavigate();
 
-  const registerHandler = async ({ username, email, password, repassword }) => {
-    if (password != repassword) {
-      return setError('Passwords don\'t match!');
-    }
+  const focusHandler = (e) => {
+    e.target.setAttribute('focused', 'true')
+  };
+
+  const registerHandler = async ({ username, email, password }) => {
     try {
       await register(username, email, password);
       navigate('/');
     } catch (err) {
-      setError(err.message);
+      console.log(err.message);
     }
   }
 
@@ -43,7 +44,7 @@ export default function Register() {
 
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form action="#" method="POST" className="space-y-6" onSubmit={submitHandler}>
+        <form method="POST" className="space-y-6" onSubmit={submitHandler}>
 
           <div>
             <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
@@ -56,10 +57,14 @@ export default function Register() {
                 type="text"
                 value={values.username}
                 onChange={changeHandler}
+                onBlur={focusHandler}
+                focused="false"
                 required
+                pattern='[a-z0-9]{3,16}'
                 autoComplete="email"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              <span className={styles.error}>Username should be 3-16 characters and shouldn't include any special character!</span>
             </div>
           </div>
 
@@ -74,10 +79,13 @@ export default function Register() {
                 type="email"
                 value={values.email}
                 onChange={changeHandler}
+                onBlur={focusHandler}
+                focused="false"
                 required
                 autoComplete="email"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              <span className={styles.error}>It should be a valid email address!</span>
             </div>
           </div>
 
@@ -95,10 +103,14 @@ export default function Register() {
                 type="password"
                 value={values.password}
                 onChange={changeHandler}
+                onBlur={focusHandler}
+                focused="false"
                 required
+                pattern='(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]){6,20}'
                 autoComplete="current-password"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              <span className={styles.error}>Password should be 6-20 characters and include at least 1 letter and 1 number!</span>
             </div>
           </div>
 
@@ -116,18 +128,16 @@ export default function Register() {
                 type="password"
                 value={values.repassword}
                 onChange={changeHandler}
+                onBlur={focusHandler}
+                focused="false"
                 required
+                pattern={values.password}
                 autoComplete="current-password"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              <span className={styles.error}>Passwords don't match!</span>
             </div>
           </div>
-
-          {error && (
-            <div className="flex items-center justify-between">
-              <p className={styles.errorRegister}>{error}</p>
-            </div>
-          )}
           
           <div>
             <button
