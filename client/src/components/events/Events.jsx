@@ -3,8 +3,8 @@ import { useGetAllEvents } from "../../hooks/useEvents";
 import EventList from "../event-list/EventList";
 
 export default function AllEvents() {
-    
-    const [events, loading] = useGetAllEvents();
+
+    const [events, loading, error] = useGetAllEvents();
 
     return (
         <>
@@ -14,11 +14,11 @@ export default function AllEvents() {
                     <dl className=" grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
 
                         {loading ? <h3 className="text-2xl font-bold tracking-tight text-gray-700">Loading...</h3>
-                        :
-                        (events.length > 0 ?
-                            events.map(event => <EventList key={event._id} {...event} />)
-                            : <h3 className="text-2xl font-bold tracking-tight text-gray-700">NO EVENTS YET</h3>)
-                        }
+                            : (error ? <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}</p>
+                                : (events.length > 0 ?
+                                    events.map(event => <EventList key={event._id} {...event} {...error} />)
+                                    : <h3 className="text-2xl font-bold tracking-tight text-gray-700">NO EVENTS YET</h3>)
+                            )}
 
                     </dl>
                 </div>

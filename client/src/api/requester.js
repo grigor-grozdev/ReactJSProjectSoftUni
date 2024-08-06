@@ -4,7 +4,7 @@ async function requester(method, url, data) {
     const options = {};
 
     const accessToken = getAccessToken();
-    
+
     if (accessToken) {
         options.headers = {
             ...options.headers,
@@ -24,17 +24,23 @@ async function requester(method, url, data) {
         options.body = JSON.stringify(data);
     }
 
-    const response = await fetch(url, options);
-    if(response.status == 204) {
-        return;
-    }
-    const result = await response.json();
+    try {
+        const response = await fetch(url, options);
 
-    if (!response.ok) {
-        throw result;
-    }
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message);
+        }
 
-    return result;
+        if (response.status == 204) {
+            return;
+        }
+        const result = await response.json();
+
+        return result;
+    } catch (error) {
+        throw new Error(error.message);
+    }
 };
 
 export const get = requester.bind(null, 'GET');

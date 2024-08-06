@@ -4,39 +4,54 @@ import eventsAPI from "../api/events-api.js"
 export function useGetAllEvents() {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         (async () => {
-            const result = await eventsAPI.getAll();
+            try {
+                const result = await eventsAPI.getAll();
 
-            //let events = Object.entries(result).map(e => e[1]);
+                //let events = Object.entries(result).map(e => e[1]);
+                setError('')
+                setLoading(false)
+                setEvents(result);
+            } catch (err) {
+                setError(err.message)
+                setLoading(false)
 
-            setLoading(false)
-            setEvents(result);
+            }
+
         })();
     }, []);
 
-    return [events, loading]
+    return [events, loading, error]
 };
 
 export function useGetUpcomingEvents() {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
     const currentDate = new Date().toISOString().split('T')[0];
 
     useEffect(() => {
         (async () => {
-            const result = await eventsAPI.getUpcoming(currentDate);
+            
+            try {
+                const result = await eventsAPI.getUpcoming(currentDate);
 
-            //let events = Object.entries(result).map(e => e[1]);
-
-            setLoading(false)
-            setEvents(result);
+                setError('')
+                setLoading(false)
+                setEvents(result);
+            } catch (err) {
+                
+                setError(err.message)
+                setLoading(false)
+            }
         })();
     }, []);
 
-    return [events, loading]
+    return [events, loading, error]
 };
 
 export function useGetOneEvent(eventId) {
@@ -48,66 +63,98 @@ export function useGetOneEvent(eventId) {
         imageUrl: '',
         description: '',
     });
+    const [error, setError] = useState('');
 
     useEffect(() => {
-        (async () => {
-            const result = await eventsAPI.getOne(eventId);
-            setEvent(result);
+        (async () => {                        
+            try {
+                const result = await eventsAPI.getOne(eventId);
+
+                setError('')
+                setEvent(result);
+            } catch (err) {                
+                setError(err.message)
+            }
         })();
+
     }, []);
 
     return [
         event,
-        setEvent
+        setEvent,
+        error
     ]
 };
 
 export function useGetUserEvents(userId) {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [eventsError, setEventsError] = useState('');
 
     useEffect(() => {
         (async () => {
-            const result = await eventsAPI.getUserEvents(userId);
+            try {
+                const result = await eventsAPI.getUserEvents(userId);
 
-            setLoading(false)
-            setEvents(result);
+                setEventsError('')
+                setLoading(false)
+                setEvents(result);
+            } catch (err) {
+                setEventsError(err.message)
+                setLoading(false)
+            }
         })();
     }, []);
 
-    return [events, loading]
+    return [events, loading, eventsError]
 };
 
 export function useGetUserCommentedEvents(userId) {
     const [events, setEvents] = useState([]);
     const [loadingCommented, setLoading] = useState(true);
+    const [commentedError, setCommentedError] = useState('');
 
     useEffect(() => {
         (async () => {
-            const result = await eventsAPI.getUserCommentedEvents(userId);
+            
+            try {
+                const result = await eventsAPI.getUserCommentedEvents(userId);
 
-            setLoading(false)
-            setEvents(result);
+                setCommentedError('')
+                setLoading(false)
+                setEvents(result);
+            } catch (err) {
+                setCommentedError(err.message)
+                setLoading(false)
+            }
         })();
     }, []);
 
-    return [events, loadingCommented]
+    return [events, loadingCommented, commentedError]
 };
 
 export function useGetUserLikedEvents(userId) {
     const [events, setEvents] = useState([]);
     const [loadingLiked, setLoading] = useState(true);
+    const [likedError, setLikedError] = useState('');
 
     useEffect(() => {
         (async () => {
-            const result = await eventsAPI.getUserLikedEvents(userId);
+            
+            try {
+                const result = await eventsAPI.getUserLikedEvents(userId);
 
-            setLoading(false)
-            setEvents(result);
+                setLikedError('')
+                setLoading(false)
+                setEvents(result);
+            } catch (err) {
+                setLikedError(err.message)
+                setLoading(false)
+            }
         })();
     }, []);
 
-    return [events, loadingLiked]
+    return [events, loadingLiked, likedError]
 };
 
 export function useCreateEvent() {
@@ -119,15 +166,23 @@ export function useCreateEvent() {
 export function useGetSearchEvents(search) {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         (async () => {
-            const result = await eventsAPI.searchAll(search);
+            try {
+                const result = await eventsAPI.searchAll(search);
 
-            setLoading(false)
-            setEvents(result);
+                setError('')
+                setLoading(false)
+                setEvents(result);
+            } catch (err) {
+                setError(err.message)
+                setLoading(false)
+
+            }
         })();
     }, [search]);
 
-    return [events, loading]
+    return [events, loading, error]
 };

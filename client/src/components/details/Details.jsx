@@ -1,4 +1,5 @@
 
+import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import styles from "../details/Details.module.css";
 
@@ -18,15 +19,21 @@ const initialValues = { comment: '' }
 export default function Details() {
     const navigate = useNavigate();
     const { eventId } = useParams();
-    const [event, setEvent] = useGetOneEvent(eventId);
+    const [event, {error: eventError}] = useGetOneEvent(eventId);
     const [comments, setComments] = useGetAllComments(eventId);
     const createComment = useCreateComment();
     const [likes, setLikes] = useGetAllLikes(eventId);
+    const [error, setError] = useState('');
+
+    const [showConfirmation, setShowConfirmation] = useState(false);
+
+
 
     const { isAuthenticated, username, userId } = useAuthContext();
 
     const isOwner = userId == event._ownerId;
-    let isLiked = likes?.some(like => like._ownerId == userId);
+    let isLiked = likes.some(like => like._ownerId == userId)
+
 
     const {
         changeHandler,
@@ -39,40 +46,47 @@ export default function Details() {
             setComments(oldComments => [...oldComments, { ...newComment, author: { username } }])
 
         } catch (err) {
-            console.log(err.message)
+            setError(err.message); 
         }
     })
 
-    const eventDeleteHandler = async (e) => {
-        e.preventDefault();
-        const isConfirmed = confirm('Are you sure?');
-        if (isConfirmed) {
-            try {
-                await eventsAPI.remove(eventId);
+    const eventDeleteHandler = () => {
+        setShowConfirmation(true)
+    }
 
-                navigate('/');
-            } catch (err) {
-                console.log(err.message)
-            }
+    const handleConfirm = async (e) => {
+        e.preventDefault();
+        try {
+            await eventsAPI.remove(eventId);
+            console.log('Deleting...')
+            setShowConfirmation(false)
+            setError(''); 
+            navigate('/');
+        } catch (err) {
+            setError(err.message); 
         }
+    }
+
+    const handleCancel = () => {
+        setShowConfirmation(false)
     }
 
     const likeHandler = async (e) => {
         e.preventDefault();
         try {
             const like = await likesAPI.create(eventId, userId);
+            isLiked = likes.some(like => like._ownerId == userId);
             setLikes(oldLikes => [...oldLikes, like])
-            isLiked=likes.some(like => like._ownerId == userId);
-            console.log(isLiked)
-
+            setError(''); 
         } catch (err) {
-            console.log(err.message);
+            setError(err.message); 
         }
 
     }
 
     return (
         <div>
+            {(error || eventError)  && <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}/{eventError}</p>}
             <div className="px-4 sm:px-0">
                 <h3 className="text-3xl font-semibold leading-7 text-gray-900">Event Information</h3>
 
@@ -142,8 +156,8 @@ export default function Details() {
                                     <ul className={styles.comments}>
                                         {comments.map(comment => (<li key={comment._id} className="block mb-1 pl-2 pr-2 rounded-lg border-2 border-grey-700 ">
                                             <div className="font-medium text-grey-800">{comment.author.username}:</div>
-                                            <div className="text-gray-400">Posted on: {(new Date(comment._createdOn)).toISOString().split('T')[0]} </div>
-                                            <div className="mt-2 text-grey-800">{comment.text}</div>
+                                            <div className="text-grey-800">{comment.text}</div>
+                                            <div className="text-xs text-gray-400">Posted on: {(new Date(comment._createdOn)).toISOString().split('T')[0]} </div>
                                         </li>))
                                         }
                                         {comments.length == 0 && <p>No comments.</p>}
@@ -205,6 +219,16 @@ export default function Details() {
 
                 </dl>
             </div>
+            {showConfirmation && (
+            <div className={styles.modaloverlay}>
+                <div className={styles.modal}>
+                    <h2 className="flex">Confirm Delete</h2>
+                    <p>Are you sure you want to delete this event?</p>
+                    <button className={styles.modalButton} onClick={handleCancel}>Cancel</button>
+                    <button className={styles.modalButton} onClick={handleConfirm}>Confirm</button>
+                </div>
+            </div>
+            )}
         </div >
     )
 }

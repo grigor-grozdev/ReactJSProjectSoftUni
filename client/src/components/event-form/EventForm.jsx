@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
 
 import { useForm } from '../../hooks/useForm'
 import { useCreateEvent } from '../../hooks/useEvents'
@@ -19,6 +20,7 @@ const initialValues = {
 export default function EventForm() {
   const createEvent = useCreateEvent();
   const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   const focusHandler = (e) => {
     e.target.setAttribute('focused', 'true')
@@ -28,11 +30,11 @@ export default function EventForm() {
 
     try {
       const { _id: eventId } = await createEvent(values);
-
+      setError('')
       navigate(`/events/${eventId}`)
     } catch (err) {
-      //todo: set error state
       console.log(err.message)
+      setError(err.message)
     }
 
   }
@@ -182,11 +184,14 @@ export default function EventForm() {
                 <span className={styles.error}>Description should be filled in!</span>
               </div>
 
+        {error && <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}</p>}
 
             </div>
 
           </div>
         </div>
+
+
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button
             type="button"

@@ -16,10 +16,15 @@ export function useForm(initialValues, submitCallback) {
     };
 
     const submitHandler = async (e) => {
-        e.preventDefault();
+        try {
+            e.preventDefault();
         
-        await submitCallback(values);
-        setValues(initialValues);
+            await submitCallback(values);
+            setValues(initialValues);
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
     };
 
     return {

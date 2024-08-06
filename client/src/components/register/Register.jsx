@@ -10,6 +10,7 @@ import styles from "../register/Register.module.css";
 const initialValues = { username: '', email: '', password: '', repassword: '' };
 
 export default function Register() {
+  const [error, setError] = useState('');
     
   const register = useRegister();
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function Register() {
       await register(username, email, password);
       navigate('/');
     } catch (err) {
-      console.log(err.message);
+      setError(err.message);
     }
   }
 
@@ -64,7 +65,7 @@ export default function Register() {
                 autoComplete="email"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              <span className={styles.error}>Username should be 3-16 characters and shouldn't include any special character!</span>
+              <span className={styles.error}>Username should be 3-16 characters and shouldn't include any special character, only letters and numbres!</span>
             </div>
           </div>
 
@@ -138,7 +139,9 @@ export default function Register() {
               <span className={styles.error}>Passwords don't match!</span>
             </div>
           </div>
-          
+
+          {error && <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}</p>}
+
           <div>
             <button
               type="submit"

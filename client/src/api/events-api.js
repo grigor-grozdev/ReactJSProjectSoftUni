@@ -14,13 +14,13 @@ const getUserLikedEvents = async (userId) => request.get(`http://localhost:3030/
 
 const getOne = async (eventId) => request.get(`${BASE_URL}/${eventId}`)
 
-const create = (eventData) => request.post(BASE_URL, eventData);
+const create = async (eventData) => request.post(BASE_URL, eventData);
 
-const remove = (eventId) => request.del(`${BASE_URL}/${eventId}`);
+const remove = async (eventId) => request.del(`${BASE_URL}/${eventId}`);
 
-const update = (eventId, eventData) => request.put(`${BASE_URL}/${eventId}`, eventData);
+const update = async (eventId, eventData) => request.put(`${BASE_URL}/${eventId}`, eventData);
 
-const searchAll = (search) => request.get(`${BASE_URL}?where=title%20LIKE%20%22${search}%22%20OR%20location%20LIKE%20%22${search}%22`)
+const searchAll = async (search) => request.get(`${BASE_URL}?where=title%20LIKE%20%22${search}%22%20OR%20location%20LIKE%20%22${search}%22`)
 
 
 const eventsAPI = {

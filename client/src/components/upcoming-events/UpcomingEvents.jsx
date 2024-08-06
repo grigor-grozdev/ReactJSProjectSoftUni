@@ -1,37 +1,28 @@
-const stats = [
+import { useGetUpcomingEvents } from "../../hooks/useEvents";
 
+import EventList from "../event-list/EventList";
 
-    { id: 1, title: '"Varna 24 hours"', location: 'Varna', date: '28.08.2024', imageUrl: 'https://th.bing.com/th/id/OIP.S8HcE8k2D0bJZ20o77cZbgAAAA?w=244&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7' },
-    { id: 2, title: '"Vitosha 100"', location: 'Sofia', date: '18.09.2024', imageUrl: 'https://th.bing.com/th?q=Florida+Cycling+Events&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-WW&cc=BG&setlang=en&adlt=moderate&t=1&mw=247' },
-    { id: 3, title: '"Dunav ultra"', location: 'Vidin', date: '05.10.2024', imageUrl: 'https://th.bing.com/th?q=Untamed+Cycling+Events&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.3&pid=InlineBlock&mkt=en-WW&cc=BG&setlang=en&adlt=moderate&t=1&mw=247' },
+export default function UpcpmingEvents() {
 
-  ]
-  
-  export default function UpcomingEvents() {
-    return (
-        <>
-        <h2 className="text-3xl font-bold tracking-tight text-gray-700">UPCOMING EVENTS</h2>
+  const [events, loading, error] = useGetUpcomingEvents();
+
+  return (
+    <>
+      <h2 className="text-3xl font-bold tracking-tight text-gray-700">UPCOMING EVENTS</h2>
       <div className="bg-white py-8 sm:py-16">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">            
-          <dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-            {stats.map((stat) => (
-              <div key={stat.id} className="flex max-w-xl flex-col items-start justify-between">
-                <img src={stat.imageUrl} alt="Image race"  /> 
-                <dt className="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">{stat.title}</dt>
-                <dd className="text-base leading-7 text-gray-600">Location: {stat.location}</dd>
-                <dd className="text-base leading-7 text-gray-600">Date: {stat.date}</dd>
-                <button
-                type="submit"
-                className="flex-none rounded-md bg-gray-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-gray-800"
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <dl className="grid grid-cols-3 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+            
+            {loading ? <h3 className="text-2xl font-bold tracking-tight text-gray-700">Loading...</h3>
+              : (error ? <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}</p>
+                : (events.length > 0 ?
+                  events.map(event => <EventList key={event._id} {...event} {...error} />)
+                  : <h3 className="text-2xl font-bold tracking-tight text-gray-700">NO EVENTS YET</h3>)
+              )}
 
-              >
-                Details
-              </button> 
-              </div>
-            ))}
           </dl>
         </div>
       </div>
-      </>
-    )
-  }
+    </>
+  )
+}

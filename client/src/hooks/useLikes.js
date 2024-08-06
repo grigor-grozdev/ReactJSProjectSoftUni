@@ -12,9 +12,13 @@ export function useGetAllLikes(eventId) {
 
     useEffect(() => {
         (async () => {
-            const result = await likesAPI.getAll(eventId);
+            try {
+                const result = await likesAPI.getAll(eventId);
+                setLikes(result);
+            } catch (error) {
+                throw new Error(error.message);
+            }
 
-            setLikes(result);
         })();
     }, [])
 

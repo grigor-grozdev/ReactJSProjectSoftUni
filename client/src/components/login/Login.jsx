@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import { useLogin } from '../../hooks/useAuth';
@@ -11,9 +12,10 @@ const initialValues = {
 };
 
 export default function Login() {
-
+  
   const login = useLogin();
   const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   const focusHandler = (e) => {
     e.target.setAttribute('focused', 'true')
@@ -23,8 +25,8 @@ export default function Login() {
     try {
       await login(email, password)
       navigate('/');
-    } catch (err) {
-      console.log(err.message);
+    } catch (err) {      
+      setError(err.message);      
     }
   }
 
@@ -32,6 +34,7 @@ export default function Login() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           alt="Your Company"
@@ -87,6 +90,7 @@ export default function Login() {
             </div>
           </div>
 
+          {error && <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}</p>}
 
           <div>
             <button

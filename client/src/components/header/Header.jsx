@@ -4,8 +4,8 @@ import { NavLink, Link } from 'react-router-dom'
 import { useAuthContext } from '../../contexts/AuthContext'
 
 const navigationAuth = [
-  { name: 'Home', href: '/' },
-  { name: 'Events', href: '/events' },
+  { name: 'Upcoming Events', href: '/' },
+  { name: 'All Events', href: '/events' },
   { name: 'Search', href: '/search' },
   { name: 'Add Event', href: '/create' },
   { name: 'Logout', href: '/logout' },
@@ -13,8 +13,8 @@ const navigationAuth = [
 ]
 
 const navigationNonAuth = [
-  { name: 'Home', href: '/' },
-  { name: 'Events', href: '/events' },
+  { name: 'Upcoming Events', href: '/' },
+  { name: 'All Events', href: '/events' },
   { name: 'Search', href: '/search' },
   { name: 'Login', href: '/login' },
   { name: 'Register', href: '/register' },
