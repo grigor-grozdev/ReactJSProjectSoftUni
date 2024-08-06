@@ -14,8 +14,7 @@ export default function EventEdit() {
   const [event, eventError] = useGetOneEvent(eventId)
   const [error, setError] = useState('');
 
-  console.log(eventError)
-
+  
   const focusHandler = (e) => {
     e.target.setAttribute('focused', 'true')
   };
@@ -49,8 +48,8 @@ export default function EventEdit() {
               Edit information about cycling event.
             </p>
 
-            {eventError ? <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{eventError}</p>
-              : (<>
+            
+              <>
                 <div className="sm:col-span-full py-1">
                   <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
                     Title
@@ -180,8 +179,8 @@ export default function EventEdit() {
 
 
                 </div>
-              </>)
-            }
+              </>
+            
           </div>
           {error && <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}</p>}
         </div>

@@ -12,13 +12,10 @@ export function useGetAllComments(eventId) {
 
     useEffect(() => {
         (async () => {
-            try {
-                const result = await commentsAPI.getAll(eventId);
+            
+            const result = await commentsAPI.getAll(eventId);
 
-                setComments(result);
-            } catch (error) {
-                throw new Error(error.message);
-            }
+                setComments(result);     
             
         })();
     }, [eventId])
