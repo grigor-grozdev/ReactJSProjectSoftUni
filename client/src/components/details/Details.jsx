@@ -177,6 +177,7 @@ export default function Details() {
                                             name="comment"
                                             className="border-2 border-grey-600 p-2 w-full rounded"
                                             required
+                                            minLength={3}
                                             onChange={changeHandler}
                                             value={values.comment}
                                         ></textarea>
