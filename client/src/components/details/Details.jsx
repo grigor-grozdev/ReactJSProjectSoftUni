@@ -19,7 +19,7 @@ const initialValues = { comment: '' }
 export default function Details() {
     const navigate = useNavigate();
     const { eventId } = useParams();
-    const [event, errorEvent] = useGetOneEvent(eventId);
+    const [event, loading, errorEvent] = useGetOneEvent(eventId);
     const [comments, setComments] = useGetAllComments(eventId);
     const createComment = useCreateComment();
     const [likes, setLikes] = useGetAllLikes(eventId);
@@ -84,7 +84,8 @@ export default function Details() {
 
     return (
         <div>
-            {(error || errorEvent)
+            {loading ? <h3 className="text-2xl font-bold tracking-tight text-gray-700">Loading...</h3>
+            :((error || errorEvent) 
             ? <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}/{errorEvent}</p>
             : (<>
             <div className="px-4 sm:px-0">
@@ -228,7 +229,7 @@ export default function Details() {
                         <button className={styles.modalButton} onClick={handleConfirm}>Confirm</button>
                     </div>
                 </div>)}
-                </>)}
+                </>))}
         </div >
     )
 }

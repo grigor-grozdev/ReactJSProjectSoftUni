@@ -43,8 +43,7 @@ export function useGetUpcomingEvents() {
                 setError('')
                 setLoading(false)
                 setEvents(result);
-            } catch (err) {
-                
+            } catch (err) {                
                 setError(err.message)
                 setLoading(false)
             }
@@ -55,6 +54,7 @@ export function useGetUpcomingEvents() {
 };
 
 export function useGetOneEvent(eventId) {
+    const [loading, setLoading] = useState(true);
     const [event, setEvent] = useState({
         title: '',
         location: '',
@@ -69,10 +69,11 @@ export function useGetOneEvent(eventId) {
         (async () => {                        
             try {
                 const result = await eventsAPI.getOne(eventId);
-
+                setLoading(false)
                 setErrorEvent('')
                 setEvent(result);
-            } catch (err) {                
+            } catch (err) {  
+                setLoading(false)              
                 setErrorEvent(err.message)
             }
         })();
@@ -81,6 +82,7 @@ export function useGetOneEvent(eventId) {
     
     return [
         event,
+        loading,
         errorEvent
     ]
 };
