@@ -5,7 +5,7 @@
 
  Features:
 
- Web app (SPA) for shareing cycling events with info for location, date, official website and brief description of the event.
+ Web app (SPA) for sharing cycling events with info for location, date, official website and brief description of the event.
  * Users can login or register. 
  * All users can see Upcoming events, All events, Details + likes and comments, and Search pages.
  * Logged in users only can create events, like events (authors can not like their events) and post comments. 
