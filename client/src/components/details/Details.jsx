@@ -19,7 +19,7 @@ const initialValues = { comment: '' }
 export default function Details() {
     const navigate = useNavigate();
     const { eventId } = useParams();
-    const [event, {error: eventError}] = useGetOneEvent(eventId);
+    const [event, { error: eventError }] = useGetOneEvent(eventId);
     const [comments, setComments] = useGetAllComments(eventId);
     const createComment = useCreateComment();
     const [likes, setLikes] = useGetAllLikes(eventId);
@@ -46,7 +46,7 @@ export default function Details() {
             setComments(oldComments => [...oldComments, { ...newComment, author: { username } }])
 
         } catch (err) {
-            setError(err.message); 
+            setError(err.message);
         }
     })
 
@@ -60,10 +60,10 @@ export default function Details() {
             await eventsAPI.remove(eventId);
             console.log('Deleting...')
             setShowConfirmation(false)
-            setError(''); 
+            setError('');
             navigate('/');
         } catch (err) {
-            setError(err.message); 
+            setError(err.message);
         }
     }
 
@@ -77,16 +77,16 @@ export default function Details() {
             const like = await likesAPI.create(eventId, userId);
             isLiked = likes.some(like => like._ownerId == userId);
             setLikes(oldLikes => [...oldLikes, like])
-            setError(''); 
+            setError('');
         } catch (err) {
-            setError(err.message); 
+            setError(err.message);
         }
 
     }
 
     return (
         <div>
-            {(error || eventError)  && <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}/{eventError}</p>}
+            {(error || eventError) && <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}/{eventError}</p>}
             <div className="px-4 sm:px-0">
                 <h3 className="text-3xl font-semibold leading-7 text-gray-900">Event Information</h3>
 
@@ -219,16 +219,15 @@ export default function Details() {
 
                 </dl>
             </div>
-            {showConfirmation && (
-            <div className={styles.modaloverlay}>
-                <div className={styles.modal}>
-                    <h2 className="flex">Confirm Delete</h2>
-                    <p>Are you sure you want to delete this event?</p>
-                    <button className={styles.modalButton} onClick={handleCancel}>Cancel</button>
-                    <button className={styles.modalButton} onClick={handleConfirm}>Confirm</button>
-                </div>
-            </div>
-            )}
+            {showConfirmation &&
+                (<div className={styles.modaloverlay}>
+                    <div className={styles.modal}>
+                        <h2 className="flex">Confirm Delete</h2>
+                        <p>Are you sure you want to delete this event?</p>
+                        <button className={styles.modalButton} onClick={handleCancel}>Cancel</button>
+                        <button className={styles.modalButton} onClick={handleConfirm}>Confirm</button>
+                    </div>
+                </div>)}
         </div >
     )
 }

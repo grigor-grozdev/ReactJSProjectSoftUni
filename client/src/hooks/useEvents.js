@@ -77,7 +77,7 @@ export function useGetOneEvent(eventId) {
             }
         })();
 
-    }, []);
+    }, [eventId]);
 
     return [
         event,

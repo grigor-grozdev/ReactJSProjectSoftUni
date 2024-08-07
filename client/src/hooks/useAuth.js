@@ -30,8 +30,8 @@ export const useLogout = () => {
 
     const logoutHandler = async () => {
         try {
-            localLogout();
             await logout();
+            localLogout();
         } catch (err) {
             localLogout();
         }

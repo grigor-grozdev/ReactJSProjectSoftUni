@@ -6,6 +6,6 @@ export default function Logout() {
     const logout = useLogout();
     
     logout();
-
+    localStorage.clear()
     return <Navigate to="/" />
 }
