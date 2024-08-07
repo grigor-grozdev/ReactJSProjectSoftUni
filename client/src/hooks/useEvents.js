@@ -16,11 +16,12 @@ export function useGetAllEvents() {
                 setLoading(false)
                 setEvents(result);
             } catch (err) {
+                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                    localStorage.clear()
+                }
                 setError(err.message)
                 setLoading(false)
-
             }
-
         })();
     }, []);
 
@@ -43,7 +44,10 @@ export function useGetUpcomingEvents() {
                 setError('')
                 setLoading(false)
                 setEvents(result);
-            } catch (err) {                
+            } catch (err) {    
+                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                    localStorage.clear()
+                }         
                 setError(err.message)
                 setLoading(false)
             }
@@ -73,6 +77,9 @@ export function useGetOneEvent(eventId) {
                 setErrorEvent('')
                 setEvent(result);
             } catch (err) {  
+                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                    localStorage.clear()
+                }
                 setLoading(false)              
                 setErrorEvent(err.message)
             }
@@ -101,6 +108,9 @@ export function useGetUserEvents(userId) {
                 setLoading(false)
                 setEvents(result);
             } catch (err) {
+                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                    localStorage.clear()
+                }
                 setEventsError(err.message)
                 setLoading(false)
             }
@@ -125,6 +135,9 @@ export function useGetUserCommentedEvents(userId) {
                 setLoading(false)
                 setEvents(result);
             } catch (err) {
+                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                    localStorage.clear()
+                }
                 setCommentedError(err.message)
                 setLoading(false)
             }
@@ -149,6 +162,9 @@ export function useGetUserLikedEvents(userId) {
                 setLoading(false)
                 setEvents(result);
             } catch (err) {
+                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                    localStorage.clear()
+                }
                 setLikedError(err.message)
                 setLoading(false)
             }
@@ -178,9 +194,11 @@ export function useGetSearchEvents(search) {
                 setLoading(false)
                 setEvents(result);
             } catch (err) {
+                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                    localStorage.clear()
+                }
                 setError(err.message)
                 setLoading(false)
-
             }
         })();
     }, [search]);

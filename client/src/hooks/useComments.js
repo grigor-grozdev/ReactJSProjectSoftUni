@@ -13,9 +13,10 @@ export function useGetAllComments(eventId) {
     useEffect(() => {
         (async () => {
             
-            const result = await commentsAPI.getAll(eventId);
+                const result = await commentsAPI.getAll(eventId);
+                setComments(result);
+            
 
-                setComments(result);     
             
         })();
     }, [eventId])

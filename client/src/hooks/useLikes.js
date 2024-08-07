@@ -16,6 +16,9 @@ export function useGetAllLikes(eventId) {
                 const result = await likesAPI.getAll(eventId);
                 setLikes(result);
             } catch (error) {
+                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                    localStorage.clear()
+                }
                 throw new Error(error.message);
             }
 

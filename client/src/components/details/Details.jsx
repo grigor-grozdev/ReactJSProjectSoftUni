@@ -86,7 +86,7 @@ export default function Details() {
         <div>
             {loading ? <h3 className="text-2xl font-bold tracking-tight text-gray-700">Loading...</h3>
             :((error || errorEvent) 
-            ? <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}/{errorEvent}</p>
+            ? <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}|{errorEvent}</p>
             : (<>
             <div className="px-4 sm:px-0">
                 <h3 className="text-3xl font-semibold leading-7 text-gray-900">Event Information</h3>
