@@ -63,26 +63,25 @@ export function useGetOneEvent(eventId) {
         imageUrl: '',
         description: '',
     });
-    const [error, setError] = useState('');
+    const [errorEvent, setErrorEvent] = useState('');
 
     useEffect(() => {
         (async () => {                        
             try {
                 const result = await eventsAPI.getOne(eventId);
 
-                setError('')
+                setErrorEvent('')
                 setEvent(result);
             } catch (err) {                
-                setError(err.message)
+                setErrorEvent(err.message)
             }
         })();
-
+        
     }, [eventId]);
-
+    
     return [
         event,
-        setEvent,
-        error
+        errorEvent
     ]
 };
 

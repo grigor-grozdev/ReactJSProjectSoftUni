@@ -11,10 +11,9 @@ import styles from "../event-edit/EventEdit.module.css";
 export default function EventEdit() {
   const navigate = useNavigate();
   const { eventId } = useParams();
-  const [event, eventError] = useGetOneEvent(eventId)
+  const [event, errorEvent] = useGetOneEvent(eventId)
   const [error, setError] = useState('');
 
-  
   const focusHandler = (e) => {
     e.target.setAttribute('focused', 'true')
   };
@@ -27,7 +26,6 @@ export default function EventEdit() {
       navigate(`/events/${eventId}`)
     } catch (err) {
       setError(err.message)
-      console.log(err.message)
     }
 
   }
@@ -48,8 +46,8 @@ export default function EventEdit() {
               Edit information about cycling event.
             </p>
 
-            
-              <>
+            {errorEvent ? <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{errorEvent}</p>
+              : <>
                 <div className="sm:col-span-full py-1">
                   <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
                     Title
@@ -63,12 +61,12 @@ export default function EventEdit() {
                       focused="false"
                       required
                       minLength={2}
-                      maxLength={40}
+                      maxLength={100}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       value={values.title}
                       onChange={changeHandler}
                     />
-                    <span className={styles.error}>Title should be 2-40 characters!</span>
+                    <span className={styles.error}>Title should be 2-100 characters!</span>
                   </div>
                 </div>
 
@@ -85,12 +83,12 @@ export default function EventEdit() {
                       focused="false"
                       required
                       minLength={2}
-                      maxLength={40}
+                      maxLength={100}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       value={values.location}
                       onChange={changeHandler}
                     />
-                    <span className={styles.error}>Location should be 2-40 characters!</span>
+                    <span className={styles.error}>Location should be 2-100 characters!</span>
                   </div>
                 </div>
 
@@ -180,7 +178,7 @@ export default function EventEdit() {
 
                 </div>
               </>
-            
+            }
           </div>
           {error && <p className="text-white border rounded-md bg-red-500 font-semibold px-3 py-1.5">{error}</p>}
         </div>
