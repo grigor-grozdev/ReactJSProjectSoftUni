@@ -13,11 +13,22 @@ const getAll = async (eventId) => {
     return request.get(`${BASE_URL}?${params.toString()}`);
 }
 
-
+const removeComments = async (comments, accessToken) => {
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'X-Admin': accessToken
+        }
+    }
+    comments.map(comment => {
+        fetch(`http://localhost:3030/data/comments/${comment._id}`, options)
+     })
+}
 
 const commentsAPI = {
     getAll,
-    create
+    create,
+    removeComments
 }
 
 export default commentsAPI;
