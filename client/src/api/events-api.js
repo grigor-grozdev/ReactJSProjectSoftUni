@@ -16,7 +16,7 @@ const getOne = async (eventId) => request.get(`${BASE_URL}/${eventId}`)
 
 const create = async (eventData) => request.post(BASE_URL, eventData);
 
-const remove = async (eventId) => request.del(`${BASE_URL}/${eventId}`);
+const remove = async (eventId) => request.del(`${BASE_URL}/${eventId}`); 
 
 const update = async (eventId, eventData) => request.put(`${BASE_URL}/${eventId}`, eventData);
 

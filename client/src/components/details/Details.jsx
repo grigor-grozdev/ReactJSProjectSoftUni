@@ -13,6 +13,7 @@ import { useForm } from "../../hooks/useForm";
 
 import eventsAPI from '../../api/events-api';
 import likesAPI from '../../api/likes-api';
+import { getAccessToken } from '../../utils/authUtils';
 
 const initialValues = { comment: '' }
 
@@ -52,15 +53,28 @@ export default function Details() {
         setShowConfirmation(true)
     }
 
+    const accessToken = getAccessToken();
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'X-Admin': accessToken
+        }
+    }
+
+
     const handleConfirm = async (e) => {
         e.preventDefault();
         try {
             await eventsAPI.remove(eventId);
+            comments.map(comment => {
+               fetch(`http://localhost:3030/data/comments/${comment._id}`, options)
+            })
+
             console.log('Deleting...')
             setShowConfirmation(false)
             setError('');
             navigate('/');
-        } catch (err) {
+         } catch (err) {
             setError(err.message);
         }
     }
