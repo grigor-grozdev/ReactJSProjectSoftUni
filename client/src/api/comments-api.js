@@ -1,6 +1,6 @@
 import *as request from "./requester";
 
-const BASE_URL = 'http://localhost:3030/data/comments';
+const BASE_URL = `${import.meta.env.VITE_API_URL}/data/comments`;
 
 const create = async (eventId, text) => request.post(BASE_URL, {eventId, text});
 
@@ -21,7 +21,7 @@ const removeComments = async (comments, accessToken) => {
         }
     }
     comments.map(comment => {
-        fetch(`http://localhost:3030/data/comments/${comment._id}`, options)
+        fetch(`${import.meta.env.VITE_API_URL}/data/comments/${comment._id}`, options)
      })
 }
 

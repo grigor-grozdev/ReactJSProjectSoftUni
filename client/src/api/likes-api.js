@@ -1,6 +1,6 @@
 import *as request from "./requester";
 
-const BASE_URL = 'http://localhost:3030/data/likes';
+const BASE_URL = `${import.meta.env.VITE_API_URL}/data/likes`;
 
 const create = async (eventId, userId) => request.post(BASE_URL, {eventId, userId});
 
@@ -25,7 +25,7 @@ const removeLikes = async (likes, accessToken) => {
         }
     }
     likes.map(like => {
-        fetch(`http://localhost:3030/data/likes/${like._id}`, options)
+        fetch(`${import.meta.env.VITE_API_URL}/data/likes/${like._id}`, options)
      })
 }
 

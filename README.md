@@ -22,3 +22,5 @@ How to run it?
     Navigate to the server directory of the project and start the Node.js server.
     - cd server
     - node server.js
+
+Firebase deploy => https://cyclingeventsapp.web.app/

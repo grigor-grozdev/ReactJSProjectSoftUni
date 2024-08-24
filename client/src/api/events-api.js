@@ -1,6 +1,6 @@
 import *as request from "./requester";
 
-const BASE_URL = 'http://localhost:3030/data/cyclingEvents';
+const BASE_URL = `${import.meta.env.VITE_API_URL}/data/cyclingEvents`;
 
 const getAll = async () => request.get(BASE_URL);
 
@@ -8,9 +8,9 @@ const getUpcoming = async (currentDate) => request.get(`${BASE_URL}?where=date>%
 
 const getUserEvents = async (userId) => request.get(`${BASE_URL}?where=_ownerId%3D%22${userId}%22`);
 
-const getUserCommentedEvents = async (userId) => request.get(`http://localhost:3030/data/comments?where=_ownerId%3D%22${userId}%22&load=eventId%3DeventId%3AcyclingEvents`);
+const getUserCommentedEvents = async (userId) => request.get(`${import.meta.env.VITE_API_URL}/data/comments?where=_ownerId%3D%22${userId}%22&load=eventId%3DeventId%3AcyclingEvents`);
 
-const getUserLikedEvents = async (userId) => request.get(`http://localhost:3030/data/likes?where=_ownerId%3D%22${userId}%22&load=eventId%3DeventId%3AcyclingEvents`);
+const getUserLikedEvents = async (userId) => request.get(`${import.meta.env.VITE_API_URL}/data/likes?where=_ownerId%3D%22${userId}%22&load=eventId%3DeventId%3AcyclingEvents`);
 
 const getOne = async (eventId) => request.get(`${BASE_URL}/${eventId}`)
 
