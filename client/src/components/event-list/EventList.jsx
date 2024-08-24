@@ -9,7 +9,7 @@ export default function EventList({
     date
 }) {
     return (
-        <div className="flex max-w-xl flex-col items-start justify-between">
+        <div className={styles.card}>
             <img className={styles.imageEventList} src={imageUrl} alt="Image race" />
             <dt className="flex max-w-xl flex-col items-start justify-between text-2xl font-semibold text-gray-900 sm:text-4xl">{title}</dt>
             <dd className="text-base leading-7 text-gray-600">Location: {location}</dd>

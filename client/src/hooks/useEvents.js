@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import eventsAPI from "../api/events-api.js"
+import { logout } from "../api/auth-api.js";
 
 export function useGetAllEvents() {
     const [events, setEvents] = useState([]);
@@ -108,7 +109,8 @@ export function useGetUserEvents(userId) {
                 setLoading(false)
                 setEvents(result);
             } catch (err) {
-                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                if (err.message == 'NetworkError when attempting to fetch resource.'|| err.message == 'Invalid access token'){
+                    logout()
                     localStorage.clear()
                 }
                 setEventsError(err.message)
@@ -135,7 +137,7 @@ export function useGetUserCommentedEvents(userId) {
                 setLoading(false)
                 setEvents(result);
             } catch (err) {
-                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                if (err.message == 'NetworkError when attempting to fetch resource.' || err.message == 'Invalid access token'){
                     localStorage.clear()
                 }
                 setCommentedError(err.message)
@@ -194,7 +196,7 @@ export function useGetSearchEvents(search) {
                 setLoading(false)
                 setEvents(result);
             } catch (err) {
-                if (err.message == 'NetworkError when attempting to fetch resource.'){
+                if (err.message == 'NetworkError when attempting to fetch resource.'|| err.message == 'Invalid access token'){
                     localStorage.clear()
                 }
                 setError(err.message)

@@ -4,7 +4,7 @@ const BASE_URL = 'http://localhost:3030/data/cyclingEvents';
 
 const getAll = async () => request.get(BASE_URL);
 
-const getUpcoming = async (currentDate) => request.get(`${BASE_URL}?where=date>%22${currentDate}%22`);
+const getUpcoming = async (currentDate) => request.get(`${BASE_URL}?where=date>%22${currentDate}%22&sortBy=date`);
 
 const getUserEvents = async (userId) => request.get(`${BASE_URL}?where=_ownerId%3D%22${userId}%22`);
 
